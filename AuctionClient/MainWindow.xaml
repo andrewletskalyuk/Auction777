@@ -1,0 +1,45 @@
+﻿<Window x:Class="AuctionClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AuctionClient"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        Closing="Windows_Closing">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <ListBox x:Name="lstAuction" ItemsSource="{Binding}"
+                 >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                        <TextBlock>LotName:</TextBlock>
+                        <TextBlock Text="{Binding Path=Name}"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock>Price:</TextBlock>
+                            <TextBlock Text="{Binding Path=Price}"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock>BuyerName:</TextBlock>
+                            <TextBlock Text="{Binding Path=BuyerName}"></TextBlock>
+                        </StackPanel>
+                        <StackPanel>
+                            <Image Source="{Binding Path=Photo}" MaxHeight="150"></Image>
+                        </StackPanel>
+                    </StackPanel>
+                    
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Grid.Row="1">
+            <Button
+                Click="MakeBet_BtnClick">MakeBet</Button>
+        </StackPanel>
+    </Grid>
+</Window>
