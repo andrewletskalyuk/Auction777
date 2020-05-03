@@ -88,6 +88,8 @@ namespace AuctionClient
                 update.Add(item);
             }
             viewmodel.MyLot = update;
+            lstAuction.ItemsSource = update;
+            this.DataContext = viewmodel;
         }
     }
     //public class ICallBack : IAukzionContractCallback

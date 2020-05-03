@@ -19,7 +19,7 @@ namespace AukzionLibrary
 
         public AukzionService()
         {
-            
+
             MyAuction = new Model();
             ServerBuyers = new List<ServerBuyerDTO>();
             AddForViewProduct();
@@ -31,7 +31,6 @@ namespace AukzionLibrary
                           select obj).ToList();
             foreach (var item in allLot)
             {
-
                 auctionLot.Add(new Lot()
                 {
                     Name = item.Name,
@@ -48,49 +47,50 @@ namespace AukzionLibrary
         {
             bool connect = false;
 
-            ServerBuyers.Add(new ServerBuyerDTO() { 
+            ServerBuyers.Add(new ServerBuyerDTO()
+            {
                 Name = name,
                 Money = money,
-                operationContextCallBack= OperationContext.Current
+                operationContextCallBack = OperationContext.Current
             });
 
-            //Заповнення в базу
-            //foreach (Buyer item in MyAuction.Buyer)
-            //{
-            //    if (item.Name == name)
-            //    {
-            //        connect = true;
-            //    }
-            //    else
-            //    {
-            //        MyAuction.Buyer.Add(new Buyer() {
-            //            Name=name,
-            //            Cash=money});
-            //        //MyAuction.SaveChanges();
-            //        connect = true;
-            //    }
-            //}
-            //  return connect;
+            var user = MyAuction.Buyer.FirstOrDefault(n => n.Name == name);
+            if (user != null && MyAuction.Buyer.Count() > 0)
+            {
+                foreach (Buyer item in MyAuction.Buyer)
+                {
+                    if (item.Name == name)
+                    {
+                        connect = true;
+                    }
+                }
+            }
+            else
+            {
+                MyAuction.Buyer.Add(new Buyer()
+                {
+                    Name = name,
+                    Cash = money
+                });
+                MyAuction.SaveChanges();
+                connect = true;
+            }
 
-            //Перевірка ДТО
-            return true;
+            return connect;
         }
 
         //збережемо дані про юзера і що він зробив
         public void DisconnectBayer(string name)
         {
-             //  var user = MyAuction.Buyer.FirstOrDefault(x => x.Name == name);
-            //if (user != null)
-            //{
-            //    MyAuction.SaveChanges(); 
-            //}
-            foreach(ServerBuyerDTO item in ServerBuyers)
+            var buyer = MyAuction.Buyer.FirstOrDefault(x => x.Name == name);
+            if (buyer != null)
             {
-                if (item.Name == name)
-                    ServerBuyers.Remove(item);
+                MyAuction.SaveChanges();
             }
+            var buyerServer = ServerBuyers.FirstOrDefault(b => b.Name == name);
+            ServerBuyers.Remove(buyerServer);
         }
-        
+
         //зробимо ставку - це для Покупця
         public void MakeBet(string nameOfBuyer, int productId, int bet)
         {
@@ -109,7 +109,7 @@ namespace AukzionLibrary
                 }
             }
 
-            foreach(ServerBuyerDTO item in ServerBuyers)
+            foreach (ServerBuyerDTO item in ServerBuyers)
             {
                 item.operationContextCallBack.GetCallbackChannel<IAuctionCallBack>().UpdateLotsForBuyer(auctionLot);
             }
@@ -120,18 +120,23 @@ namespace AukzionLibrary
             throw new NotImplementedException();
         }
 
-          public  ObservableCollection<Lot> auctionLot = new ObservableCollection<Lot>();
+        public ObservableCollection<Lot> auctionLot = new ObservableCollection<Lot>();
         public ObservableCollection<Lot> GetAllProduct()
         {
-
-            
             return auctionLot;
 
         }
         //додаємо продукт в базу
         public void AddProduct(string name, decimal startPrice, string pathToPhoto)
         {
-            MyAuction.Product.Add(new Product() { Name = name, StartPrice = startPrice, Photo = pathToPhoto, Status = false });
+            MyAuction.Product.Add(new Product()
+            {
+                Name = name,
+                StartPrice = startPrice,
+                Photo = pathToPhoto,
+                Status = false
+            });
+            MyAuction.SaveChanges();
         }
     }
 
