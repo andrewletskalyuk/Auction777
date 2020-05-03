@@ -10,21 +10,18 @@ namespace AuctionClient.ViewModel
 {
     public class AuctionViewModel
     {
-		
-		//public ICallBack call;
-		public AuctionViewModel()
-		{
-			MyLot = new ObservableCollection<Lot>();
-			
-			
-		}
-
-		private ObservableCollection<Lot> myLot;
+		private ObservableCollection<Lot> _myLot;
 
 		public ObservableCollection<Lot> MyLot
 		{
-			get { return myLot; }
-			set { myLot = value; }
+			get { return _myLot; }
+			set { _myLot = value; }
 		}
+
+		public AuctionViewModel()
+		{
+			MyLot = new ObservableCollection<Lot>();
+		}
+
 	}
 }

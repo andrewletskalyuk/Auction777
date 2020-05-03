@@ -1,16 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace AuctionClient
 {
@@ -32,15 +21,18 @@ namespace AuctionClient
 
         private void EnterBySeller_BtnClick(object sender, RoutedEventArgs e)
         {
-
+            //sdfgsdfg
         }
 
         private void Enter_BtnClick(object sender, RoutedEventArgs e)
         {
             int value = Int32.Parse(tbBuyerCash.Text);
             MainWindow window = new MainWindow(tbBuyerName.Text,value);
-            window.ShowDialog();
-            window.PR = this;
+            window.Owner = this; //головне вікно - це.
+            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            //window.ShowDialog();
+            window.Show();
+            //window.PR = this;
         }
     }
 }

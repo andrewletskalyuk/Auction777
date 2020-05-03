@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AuctionClient"
         mc:Ignorable="d"
+        x:Name="mainWindowTitle"
         Title="MainWindow" Height="450" Width="800"
         Closing="Windows_Closing">
     <Grid>
@@ -19,18 +20,18 @@
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
                         <TextBlock>LotName:</TextBlock>
-                        <TextBlock Text="{Binding Path=Name}"></TextBlock>
+                        <TextBlock Text="{Binding Path=Name, IsAsync=True, Mode=TwoWay}"></TextBlock>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock>Price:</TextBlock>
-                            <TextBlock Text="{Binding Path=Price}"></TextBlock>
+                            <TextBlock Text="{Binding Path=Price, IsAsync=True, Mode=TwoWay}"></TextBlock>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock>BuyerName:</TextBlock>
-                            <TextBlock Text="{Binding Path=BuyerName}"></TextBlock>
+                            <TextBlock Text="{Binding Path=BuyerName, IsAsync=True, Mode=TwoWay}"></TextBlock>
                         </StackPanel>
                         <StackPanel>
-                            <Image Source="{Binding Path=Photo}" MaxHeight="150"></Image>
+                            <Image Source="{Binding Path=Photo, IsAsync=True, Mode=TwoWay}" MaxHeight="150"></Image>
                         </StackPanel>
                     </StackPanel>
                     
