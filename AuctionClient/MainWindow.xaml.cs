@@ -35,40 +35,45 @@ namespace AuctionClient
             buyerMoney = money;
             buyerName = name;
 
+            stTest.DataContext = viewmodel;
             client = new AukzionContractClient(new InstanceContext(this));
-
             var connection = client.ConnectionForBuyer(buyerName, buyerMoney);
-
+            //Вибираємо лоти для viewmodel
+            GetProducts();
+            viewmodel.BuyerCash = money;
+            this.DataContext = viewmodel;
+            lstAuction.ItemsSource = viewmodel.MyLot;
+        }
+        public void GetProducts()
+        {
             var obj = client.GetAllProduct();
             //Створює усі колекції масивами
             foreach (ServerLotDTO item in obj)
             {
                 viewmodel.MyLot.Add(item);
             }
-            this.DataContext = viewmodel;
-            lstAuction.ItemsSource = viewmodel.MyLot;
         }
 
-        public void Bet()
-        {
-            throw new NotImplementedException();
-        }
                
         private void MakeBet_BtnClick(object sender, RoutedEventArgs e)
         {
             ServerLotDTO makeBetLot = (lstAuction.SelectedItem as ServerLotDTO);
-            for (int i = 0; i < viewmodel.MyLot.Count; i++)
-            {
-                if (makeBetLot == viewmodel.MyLot[i])
-                {
-                    viewmodel.MyLot[i].BuyerName = buyerName;
-                    //  buyerMoney -= viewmodel.MyLot[i].SoldPrice;
-                }
-            }
+            //for (int i = 0; i < viewmodel.MyLot.Count; i++)
+            //{
+            //    if (makeBetLot == viewmodel.MyLot[i])
+            //    {
+            //        viewmodel.MyLot[i].BuyerName = buyerName;
+            //        //  buyerMoney -= viewmodel.MyLot[i].SoldPrice;
+            //    }
+            //}
+            //Зняття кешу за ставку
+           // buyerMoney- makeBetLot.
             //Передача ціни та Ід
+
+
             if (makeBetLot != null)
             {
-                client.MakeBet(buyerName, makeBetLot.Id, 1000000);
+                client.MakeBet(buyerName, makeBetLot.Id,int.Parse(tbBet.Text));
             }
 
         }
@@ -88,6 +93,14 @@ namespace AuctionClient
             viewmodel.MyLot = update;
             lstAuction.ItemsSource = update;
             this.DataContext = viewmodel;
+        }
+
+        public void Bet(decimal buyerCash)
+        {
+            buyerMoney =(int)buyerCash;
+            viewmodel.BuyerCash = (int)buyerCash;
+           // tbCash.Text = buyerCash.ToString();
+            stTest.DataContext = viewmodel;
         }
     }
 }

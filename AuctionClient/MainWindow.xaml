@@ -4,11 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AuctionClient"
+        xmlns:b="clr-namespace:AuctionClient.ViewModel"
         mc:Ignorable="d"
         x:Name="mainWindowTitle"
         Title="MainWindow" Height="450" Width="800"
         Closing="Windows_Closing">
-    <Grid>
+    <Window.Resources>
+        <b:AuctionViewModel x:Key="AucVM"></b:AuctionViewModel>
+    </Window.Resources>
+    <Grid >
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
@@ -37,9 +41,26 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <StackPanel Grid.Row="1">
+        <StackPanel Grid.Row="1" Name="stTest">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal">
+                <TextBlock>UserName:</TextBlock>
+                    <TextBlock></TextBlock>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <TextBlock>UserCash:</TextBlock>
+                    <Label x:Name="tbCash" Content="{Binding Path=BuyerCash}"></Label>
+                </StackPanel>
+            </DockPanel>
+            <StackPanel Orientation="Horizontal">
+                
             <Button
-                Click="MakeBet_BtnClick">MakeBet</Button>
+                Click="MakeBet_BtnClick" Height="50">MakeBet</Button>
+                <Slider x:Name="sliderBet" Width="300" HorizontalAlignment="Right" Maximum="{Binding Path=BuyerCash}"
+                        IsSnapToTickEnabled="True" TickFrequency="500" TickPlacement="Both"></Slider>
+                <TextBlock>Bet:</TextBlock>
+                <TextBlock x:Name="tbBet" Text="{Binding ElementName=sliderBet,Path=Value}"></TextBlock>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>

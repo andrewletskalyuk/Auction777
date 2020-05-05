@@ -183,7 +183,7 @@ namespace AuctionClient.ServiceReference1 {
     public interface IAukzionContractCallback {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IAukzionContract/Bet")]
-        void Bet();
+        void Bet(decimal buyerCash);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IAukzionContract/UpdateLotsForBuyer")]
         void UpdateLotsForBuyer(AuctionClient.ServiceReference1.ServerLotDTO[] lots);

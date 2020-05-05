@@ -57,6 +57,7 @@ namespace AukzionLibrary
             });
 
             var user = MyAuction.Buyer.FirstOrDefault(n => n.Name == name);
+
             if (user != null && MyAuction.Buyer.Count() > 0)
             {
                 foreach (Buyer item in MyAuction.Buyer)
@@ -98,22 +99,35 @@ namespace AukzionLibrary
         {
             var user = MyAuction.Buyer.FirstOrDefault(x => x.Name == nameOfBuyer);
             var product = MyAuction.Product.FirstOrDefault(y => y.Id == productId);
-            if (product.SellPrice > bet)
+            if(user.Cash>bet)
             {
-                product.SellPrice = bet;
+                user.Cash -=bet;
+                if (product.SellPrice < bet)
+                {
+                    product.SellPrice = bet;
+                }
             }
+
             //auctionLot.
             for (int i = 0; i < auctionLot.Count; i++)
             {
                 if (auctionLot[i].Name == product.Name)
                 {
                     auctionLot[i].BuyerName = nameOfBuyer;
+                    auctionLot[i].Price = bet;
                 }
             }
+
+
+            
+            //для бази
+          //  MyAuction.Product.FirstOrDefault(y => y.Id == productId).SellPrice = bet;
+
 
             foreach (ServerBuyerDTO item in ServerBuyers)
             {
                 item.operationContextCallBack.GetCallbackChannel<IAuctionCallBack>().UpdateLotsForBuyer(auctionLot);
+                item.operationContextCallBack.GetCallbackChannel<IAuctionCallBack>().Bet((decimal)user.Cash);
             }
         }
 

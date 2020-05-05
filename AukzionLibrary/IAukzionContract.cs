@@ -31,7 +31,7 @@ namespace AukzionLibrary
     public interface IAuctionCallBack
     {
         [OperationContract(IsOneWay = true)]
-        void Bet();
+        void Bet(decimal buyerCash);
         [OperationContract(IsOneWay = true)]
         void UpdateLotsForBuyer(ObservableCollection<ServerLotDTO> lots);
     }
