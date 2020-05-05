@@ -93,7 +93,7 @@ namespace AukzionLibrary
             var buyerServer = ServerBuyers.FirstOrDefault(b => b.Name == name);
             ServerBuyers.Remove(buyerServer);
         }
-
+        
         //зробимо ставку - це для Покупця
         public void MakeBet(string nameOfBuyer, int productId, int bet)
         {
