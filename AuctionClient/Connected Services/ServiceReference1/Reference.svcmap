@@ -25,7 +25,7 @@
     <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="7c5cf6a6-2e22-47e3-93d3-2ccb493e4b09" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/AukzionLibrary/AukzionService/mex" />
     <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="f7002734-b03a-40ad-bae2-6284048716b1" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/AukzionLibrary/AukzionService/mex" />
     <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="ca1c8bf8-665c-4303-bf46-719faea8112e" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/AukzionLibrary/AukzionService/mex" />
-    <MetadataFile FileName="AukzionLibrary.xsd" MetadataType="Schema" ID="6e84d1b1-7d8d-4e54-b729-84cd4ee8dca0" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/AukzionLibrary/AukzionService/mex" />
+    <MetadataFile FileName="AukzionLibrary.DTOClasses.xsd" MetadataType="Schema" ID="ab53f0af-15c1-4287-a753-4d45679dbd7d" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/AukzionLibrary/AukzionService/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

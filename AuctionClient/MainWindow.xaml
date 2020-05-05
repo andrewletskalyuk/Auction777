@@ -13,8 +13,7 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <ListBox x:Name="lstAuction" ItemsSource="{Binding}"
-                 >
+        <ListBox x:Name="lstAuction" ItemsSource="{Binding}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>

@@ -15,9 +15,9 @@ namespace AuctionClient.ServiceReference1 {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Lot", Namespace="http://schemas.datacontract.org/2004/07/AukzionLibrary")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServerLotDTO", Namespace="http://schemas.datacontract.org/2004/07/AukzionLibrary.DTOClasses")]
     [System.SerializableAttribute()]
-    public partial class Lot : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class ServerLotDTO : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -149,10 +149,10 @@ namespace AuctionClient.ServiceReference1 {
         System.Threading.Tasks.Task<bool> ConnectionForBuyerAsync(string name, int money);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAukzionContract/GetAllProduct", ReplyAction="http://tempuri.org/IAukzionContract/GetAllProductResponse")]
-        AuctionClient.ServiceReference1.Lot[] GetAllProduct();
+        AuctionClient.ServiceReference1.ServerLotDTO[] GetAllProduct();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAukzionContract/GetAllProduct", ReplyAction="http://tempuri.org/IAukzionContract/GetAllProductResponse")]
-        System.Threading.Tasks.Task<AuctionClient.ServiceReference1.Lot[]> GetAllProductAsync();
+        System.Threading.Tasks.Task<AuctionClient.ServiceReference1.ServerLotDTO[]> GetAllProductAsync();
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IAukzionContract/Sold")]
         void Sold(int productId, int buyerId);
@@ -172,11 +172,11 @@ namespace AuctionClient.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IAukzionContract/MakeBet")]
         System.Threading.Tasks.Task MakeBetAsync(string name, int productId, int bet);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IAukzionContract/AddProduct")]
-        void AddProduct(string name, decimal startPrice, string pathToPhoto);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IAukzionContract/AddProductToDB")]
+        void AddProductToDB(string name, decimal startPrice, string pathToPhoto);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IAukzionContract/AddProduct")]
-        System.Threading.Tasks.Task AddProductAsync(string name, decimal startPrice, string pathToPhoto);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IAukzionContract/AddProductToDB")]
+        System.Threading.Tasks.Task AddProductToDBAsync(string name, decimal startPrice, string pathToPhoto);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -186,7 +186,7 @@ namespace AuctionClient.ServiceReference1 {
         void Bet();
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IAukzionContract/UpdateLotsForBuyer")]
-        void UpdateLotsForBuyer(AuctionClient.ServiceReference1.Lot[] lots);
+        void UpdateLotsForBuyer(AuctionClient.ServiceReference1.ServerLotDTO[] lots);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -225,11 +225,11 @@ namespace AuctionClient.ServiceReference1 {
             return base.Channel.ConnectionForBuyerAsync(name, money);
         }
         
-        public AuctionClient.ServiceReference1.Lot[] GetAllProduct() {
+        public AuctionClient.ServiceReference1.ServerLotDTO[] GetAllProduct() {
             return base.Channel.GetAllProduct();
         }
         
-        public System.Threading.Tasks.Task<AuctionClient.ServiceReference1.Lot[]> GetAllProductAsync() {
+        public System.Threading.Tasks.Task<AuctionClient.ServiceReference1.ServerLotDTO[]> GetAllProductAsync() {
             return base.Channel.GetAllProductAsync();
         }
         
@@ -257,12 +257,12 @@ namespace AuctionClient.ServiceReference1 {
             return base.Channel.MakeBetAsync(name, productId, bet);
         }
         
-        public void AddProduct(string name, decimal startPrice, string pathToPhoto) {
-            base.Channel.AddProduct(name, startPrice, pathToPhoto);
+        public void AddProductToDB(string name, decimal startPrice, string pathToPhoto) {
+            base.Channel.AddProductToDB(name, startPrice, pathToPhoto);
         }
         
-        public System.Threading.Tasks.Task AddProductAsync(string name, decimal startPrice, string pathToPhoto) {
-            return base.Channel.AddProductAsync(name, startPrice, pathToPhoto);
+        public System.Threading.Tasks.Task AddProductToDBAsync(string name, decimal startPrice, string pathToPhoto) {
+            return base.Channel.AddProductToDBAsync(name, startPrice, pathToPhoto);
         }
     }
 }

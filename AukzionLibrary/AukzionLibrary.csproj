@@ -52,7 +52,8 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTOClass\ServerBuyerDTO.cs" />
+    <Compile Include="DTOClasses\ServerBuyerDTO.cs" />
+    <Compile Include="DTOClasses\ServerLotDTO.cs" />
     <Compile Include="IAukzionContract.cs" />
     <Compile Include="DBContext\Buyer.cs" />
     <Compile Include="DBContext\Model.cs" />

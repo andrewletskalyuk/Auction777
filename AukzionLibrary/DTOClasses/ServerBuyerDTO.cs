@@ -13,6 +13,5 @@ namespace AukzionLibrary.DTOClass
         public string  Name { get; set; }
         public int Money { get; set; }
         public OperationContext operationContextCallBack { get; set; }
-      //  public ObservableCollection<Lot> AuctionLots { get; set; }
     }
 }

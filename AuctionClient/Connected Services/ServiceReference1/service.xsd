@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import namespace="http://schemas.datacontract.org/2004/07/AukzionLibrary" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/AukzionLibrary.DTOClasses" />
   <xs:element name="ConnectionForBuyer">
     <xs:complexType>
       <xs:sequence>
@@ -24,7 +24,7 @@
   <xs:element name="GetAllProductResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/AukzionLibrary" minOccurs="0" name="GetAllProductResult" nillable="true" type="q1:ArrayOfLot" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/AukzionLibrary.DTOClasses" minOccurs="0" name="GetAllProductResult" nillable="true" type="q1:ArrayOfServerLotDTO" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -52,7 +52,7 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="AddProduct">
+  <xs:element name="AddProductToDB">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
@@ -69,7 +69,7 @@
   <xs:element name="UpdateLotsForBuyer">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/AukzionLibrary" minOccurs="0" name="lots" nillable="true" type="q2:ArrayOfLot" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/AukzionLibrary.DTOClasses" minOccurs="0" name="lots" nillable="true" type="q2:ArrayOfServerLotDTO" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

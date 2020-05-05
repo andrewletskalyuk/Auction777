@@ -264,7 +264,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IAukzionContract_AddProduct_Input_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IAukzionContract_AddProductToDB_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -337,7 +337,7 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import namespace="http://tempuri.org/" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import namespace="http://schemas.datacontract.org/2004/07/AukzionLibrary" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/AukzionLibrary.DTOClasses" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IAukzionContract_ConnectionForBuyer_InputMessage">
@@ -361,8 +361,8 @@
   <wsdl:message name="IAukzionContract_MakeBet_InputMessage">
     <wsdl:part name="parameters" element="tns:MakeBet" />
   </wsdl:message>
-  <wsdl:message name="IAukzionContract_AddProduct_InputMessage">
-    <wsdl:part name="parameters" element="tns:AddProduct" />
+  <wsdl:message name="IAukzionContract_AddProductToDB_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddProductToDB" />
   </wsdl:message>
   <wsdl:message name="IAukzionContract_Bet_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:Bet" />
@@ -388,8 +388,8 @@
     <wsdl:operation name="MakeBet">
       <wsdl:input wsaw:Action="http://tempuri.org/IAukzionContract/MakeBet" message="tns:IAukzionContract_MakeBet_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="AddProduct">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAukzionContract/AddProduct" message="tns:IAukzionContract_AddProduct_InputMessage" />
+    <wsdl:operation name="AddProductToDB">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAukzionContract/AddProductToDB" message="tns:IAukzionContract_AddProductToDB_InputMessage" />
     </wsdl:operation>
     <wsdl:operation name="Bet">
       <wsdl:output wsaw:Action="http://tempuri.org/IAukzionContract/Bet" message="tns:IAukzionContract_Bet_OutputCallbackMessage" />
@@ -444,10 +444,10 @@
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
-    <wsdl:operation name="AddProduct">
-      <soap12:operation soapAction="http://tempuri.org/IAukzionContract/AddProduct" style="document" />
+    <wsdl:operation name="AddProductToDB">
+      <soap12:operation soapAction="http://tempuri.org/IAukzionContract/AddProductToDB" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IAukzionContract_AddProduct_Input_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IAukzionContract_AddProductToDB_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>

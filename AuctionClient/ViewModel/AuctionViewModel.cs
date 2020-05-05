@@ -10,9 +10,9 @@ namespace AuctionClient.ViewModel
 {
     public class AuctionViewModel
     {
-		private ObservableCollection<Lot> _myLot;
+		private ObservableCollection<ServerLotDTO> _myLot;
 
-		public ObservableCollection<Lot> MyLot
+		public ObservableCollection<ServerLotDTO> MyLot
 		{
 			get { return _myLot; }
 			set { _myLot = value; }
@@ -20,7 +20,7 @@ namespace AuctionClient.ViewModel
 
 		public AuctionViewModel()
 		{
-			MyLot = new ObservableCollection<Lot>();
+			MyLot = new ObservableCollection<ServerLotDTO>();
 		}
 
 	}

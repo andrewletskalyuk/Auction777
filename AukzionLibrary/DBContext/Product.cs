@@ -26,7 +26,7 @@ namespace AukzionLibrary.DBContext
         [Column(TypeName = "money")]
         public decimal? SellPrice { get; set; }
 
-        public bool? Status { get; set; }
+        public bool? Status { get; set; } //чи доступний для продажу даний товар
 
         [StringLength(2000)]
         public string Photo { get; set; }

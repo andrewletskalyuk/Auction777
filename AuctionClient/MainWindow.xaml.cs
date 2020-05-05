@@ -4,6 +4,7 @@ using System.ServiceModel;
 using System.Windows;
 using AuctionClient.ServiceReference1;
 using AuctionClient.ViewModel;
+using AuctionClient.ViewModel;
 
 namespace AuctionClient
 {
@@ -15,8 +16,7 @@ namespace AuctionClient
     {
         public AukzionContractClient client;
         //public StartWindow PR { get; set; }
-        public AuctionViewModel viewmodel { get; set; }
-
+        public AuctionClient.AuctionViewModel viewmodel { get; set; }
         string buyerName;
         int buyerMoney;
         public MainWindow()
@@ -37,12 +37,11 @@ namespace AuctionClient
 
             client = new AukzionContractClient(new InstanceContext(this));
 
-
             var connection = client.ConnectionForBuyer(buyerName, buyerMoney);
 
             var obj = client.GetAllProduct();
             //Створює усі колекції масивами
-            foreach (Lot item in obj)
+            foreach (ServerLotDTO item in obj)
             {
                 viewmodel.MyLot.Add(item);
             }
@@ -55,10 +54,9 @@ namespace AuctionClient
             throw new NotImplementedException();
         }
                
-
         private void MakeBet_BtnClick(object sender, RoutedEventArgs e)
         {
-            Lot makeBetLot = (lstAuction.SelectedItem as Lot);
+            ServerLotDTO makeBetLot = (lstAuction.SelectedItem as ServerLotDTO);
             for (int i = 0; i < viewmodel.MyLot.Count; i++)
             {
                 if (makeBetLot == viewmodel.MyLot[i])
@@ -80,10 +78,10 @@ namespace AuctionClient
             client.DisconnectBayer(buyerName);
         }
 
-        public void UpdateLotsForBuyer(Lot[] lots)
+        public void UpdateLotsForBuyer(ServerLotDTO[] lots)
         {
-            ObservableCollection<Lot> update = new ObservableCollection<Lot>();
-            foreach (Lot item in lots)
+            ObservableCollection<ServerLotDTO> update = new ObservableCollection<ServerLotDTO>();
+            foreach (ServerLotDTO item in lots)
             {
                 update.Add(item);
             }
@@ -92,22 +90,4 @@ namespace AuctionClient
             this.DataContext = viewmodel;
         }
     }
-    //public class ICallBack : IAukzionContractCallback
-    //{
-
-    //    public void Bet()
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-
-    //    public void UpdateLotsForBuyer(Lot[] lots)
-    //    {
-    //        ObservableCollection<Lot> update = new ObservableCollection<Lot>();
-    //        foreach (Lot item in lots)
-    //        {
-    //            update.Add(item);
-
-    //        }
-    //    }
-    //}
 }

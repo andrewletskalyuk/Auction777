@@ -31,7 +31,20 @@
         </Grid.RowDefinitions>
         
         <StackPanel x:Name="stpEnter" Orientation="Horizontal">
-            <Button Width="130" Click="EnterByBuyer_BtnClick">Enter by buyer</Button>
+            <Button 
+                x:Name="btnEnterByBuyer"
+                Click="EnterByBuyer_BtnClick" 
+                Width="130" 
+                Background="White">
+                <StackPanel Orientation="Horizontal">
+                    <Image x:Name="b1" Source="ImagesForProject/buyer.png" Width="30" Height="30" />
+                    <TextBlock x:Name="tbBuyer"
+                           Text="Enter by buyer"
+                           FontSize="12"
+                           TextAlignment="Center"
+                           VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
             <Button Width="130" Click="EnterBySeller_BtnClick">Enter by seller</Button>
         </StackPanel>
         <StackPanel x:Name="stpBuyerInfo" Visibility="Hidden"  Grid.Row="1">

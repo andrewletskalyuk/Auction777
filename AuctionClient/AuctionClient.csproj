@@ -60,7 +60,10 @@
     <Compile Include="StartWindow.xaml.cs">
       <DependentUpon>StartWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\AuctionViewModel.cs" />
+    <Resource Include="ImagesForProject\buyer.png" />
+    <Resource Include="ViewModel\AuctionViewModel.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -101,10 +104,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Connected Services\ServiceReference1\AuctionClient.ServiceReference1.Lot.datasource">
+    <None Include="Connected Services\ServiceReference1\AuctionClient.ServiceReference1.ServerLotDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\ServiceReference1\AukzionLibrary.xsd">
+    <None Include="Connected Services\ServiceReference1\AukzionLibrary.DTOClasses.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\ServiceReference1\service.wsdl" />
@@ -141,6 +144,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="bin\" />
     <Folder Include="ClassHelper\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

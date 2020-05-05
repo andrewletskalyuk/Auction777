@@ -7,6 +7,7 @@ using System.ServiceModel;
 using System.Text;
 using AukzionLibrary.DBContext;
 using AukzionLibrary.DTOClass;
+using AukzionLibrary.DTOClasses;
 
 namespace AukzionLibrary
 {
@@ -16,12 +17,13 @@ namespace AukzionLibrary
         public Model MyAuction;
 
         public List<ServerBuyerDTO> ServerBuyers;
-
+        public ObservableCollection<ServerLotDTO> auctionLot;
         public AukzionService()
         {
 
             MyAuction = new Model();
             ServerBuyers = new List<ServerBuyerDTO>();
+            auctionLot = new ObservableCollection<ServerLotDTO>();
             AddForViewProduct();
         }
 
@@ -31,7 +33,7 @@ namespace AukzionLibrary
                           select obj).ToList();
             foreach (var item in allLot)
             {
-                auctionLot.Add(new Lot()
+                auctionLot.Add(new ServerLotDTO()
                 {
                     Name = item.Name,
                     Id = item.Id,
@@ -115,20 +117,19 @@ namespace AukzionLibrary
             }
         }
 
-        public void Sold(int productId, int buyerId)
+        public void Sold(int productId, int buyerId) //це треба дописати
         {
             throw new NotImplementedException();
         }
 
-        public ObservableCollection<Lot> auctionLot = new ObservableCollection<Lot>();
-        public ObservableCollection<Lot> GetAllProduct()
+        public ObservableCollection<ServerLotDTO> GetAllProduct()
         {
             return auctionLot;
-
         }
         //додаємо продукт в базу
-        public void AddProduct(string name, decimal startPrice, string pathToPhoto)
+        public void AddProductToDB(string name, decimal startPrice, string pathToPhoto)
         {
+            //тут треба перевірки чи даного продуктку немає в БД
             MyAuction.Product.Add(new Product()
             {
                 Name = name,
