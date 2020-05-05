@@ -61,6 +61,15 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="AddProductToDBSeller">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="startPrice" type="xs:decimal" />
+        <xs:element minOccurs="0" name="pathToPhoto" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="Bet">
     <xs:complexType>
       <xs:sequence />

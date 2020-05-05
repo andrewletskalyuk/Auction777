@@ -25,9 +25,9 @@ namespace AukzionLibrary.DTOClasses
             }
         }
 
-        private int _price;
+        private decimal _price;
 
-        public int Price
+        public decimal Price
         {
             get { return _price; }
             set
@@ -37,9 +37,9 @@ namespace AukzionLibrary.DTOClasses
             }
         }
 
-        private int _soldPrice;
+        private decimal _soldPrice;
 
-        public int SoldPrice
+        public decimal SoldPrice
         {
             get { return _soldPrice; }
             set

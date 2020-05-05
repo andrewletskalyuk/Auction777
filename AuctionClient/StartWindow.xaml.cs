@@ -21,18 +21,26 @@ namespace AuctionClient
 
         private void EnterBySeller_BtnClick(object sender, RoutedEventArgs e)
         {
-            //sdfgsdfg
+            stpSellerInfo.Visibility = Visibility.Visible;
+            stpEnter.IsEnabled = false;
         }
 
         private void Enter_BtnClick(object sender, RoutedEventArgs e)
         {
-            int value = Int32.Parse(tbBuyerCash.Text);
-            MainWindow window = new MainWindow(tbBuyerName.Text,value);
+            int buyerCash = Int32.Parse(tbBuyerCash.Text);
+            MainWindow window = new MainWindow(tbBuyerName.Text,buyerCash);
             window.Owner = this; //головне вікно - це.
             window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            //window.ShowDialog();
             window.Show();
-            //window.PR = this;
+        }
+
+        private void btnForSeller_Click(object sender, RoutedEventArgs e)
+        {
+            int sellerCash = Int32.Parse(tbSellerCash.Text);
+            SellerWindow sellerWindow = new SellerWindow(tbSellerName.Text, sellerCash);
+            sellerWindow.Owner = this;
+            sellerWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            sellerWindow.Show();
         }
     }
 }

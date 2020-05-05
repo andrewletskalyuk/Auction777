@@ -15,7 +15,6 @@ namespace AuctionClient
     {
         
         public AukzionContractClient client;
-        //public StartWindow PR { get; set; }
         public AuctionViewModel viewmodel { get; set; }
         string buyerName;
         int buyerMoney;

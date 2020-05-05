@@ -45,7 +45,20 @@
                            VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
-            <Button Width="130" Click="EnterBySeller_BtnClick">Enter by seller</Button>
+            <Button 
+                x:Name="btnEnterBySeller"
+                Width="130" 
+                Click="EnterBySeller_BtnClick"
+                Background="White">
+                <StackPanel Orientation="Horizontal">
+                    <Image x:Name="b2" Source="ImagesForProject/seller.png" Width="30" Height="30" />
+                    <TextBlock x:Name="tbseller"
+                           Text="Enter by seller"
+                           FontSize="12"
+                           TextAlignment="Center"
+                           VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
         </StackPanel>
         <StackPanel x:Name="stpBuyerInfo" Visibility="Hidden"  Grid.Row="1">
             <TextBlock>Name:</TextBlock>
@@ -53,6 +66,15 @@
             <TextBlock>Cash:</TextBlock>
             <TextBox x:Name="tbBuyerCash"></TextBox>
             <Button Height="45" Click="Enter_BtnClick">Enter</Button>
+        </StackPanel>
+        <StackPanel x:Name="stpSellerInfo" Visibility="Hidden"  Grid.Row="1">
+            <TextBlock>Name:</TextBlock>
+            <TextBox x:Name="tbSellerName"></TextBox>
+            <TextBlock>Cash:</TextBlock>
+            <TextBox x:Name="tbSellerCash"></TextBox>
+            <Button 
+                x:Name="btnForSeller"
+                Height="45" Click="btnForSeller_Click">Enter</Button>
         </StackPanel>
     </Grid>
 </Window>
