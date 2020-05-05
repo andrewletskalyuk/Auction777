@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace AuctionClient.ViewModel
 {
-    public class AuctionViewModel
-    {
+	public class AuctionViewModel
+	{
+
 		private ObservableCollection<ServerLotDTO> _myLot;
 
 		public ObservableCollection<ServerLotDTO> MyLot

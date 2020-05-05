@@ -13,6 +13,7 @@ namespace AuctionClient
     
     public partial class MainWindow : Window, IAukzionContractCallback
     {
+        
         public AukzionContractClient client;
         //public StartWindow PR { get; set; }
         public AuctionViewModel viewmodel { get; set; }
