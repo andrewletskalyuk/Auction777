@@ -4,7 +4,6 @@ using System.ServiceModel;
 using System.Windows;
 using AuctionClient.ServiceReference1;
 using AuctionClient.ViewModel;
-using AuctionClient.ViewModel;
 
 namespace AuctionClient
 {
@@ -14,9 +13,10 @@ namespace AuctionClient
     
     public partial class MainWindow : Window, IAukzionContractCallback
     {
+        
         public AukzionContractClient client;
         //public StartWindow PR { get; set; }
-        public AuctionClient.AuctionViewModel viewmodel { get; set; }
+        public AuctionViewModel viewmodel { get; set; }
         string buyerName;
         int buyerMoney;
         public MainWindow()
