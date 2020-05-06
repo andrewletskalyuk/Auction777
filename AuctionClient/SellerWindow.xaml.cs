@@ -3,6 +3,7 @@ using AuctionClient.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -32,20 +33,45 @@ namespace AuctionClient
             InitializeComponent();
             sellerName = "NoName";
             sellerCash = 0;
+            this.DataContext = viewmodel;
+            lbLots.ItemsSource = viewmodel.MyLot;
         }
 
+        /// <summary>
+        /// Start window with parameters
+        /// </summary>
+        /// <param name="sellerName"></param>
+        /// <param name="sellerCash"></param>
         public SellerWindow(string sellerName, int sellerCash)
         {
+            InitializeComponent();
             this.sellerName = sellerName;
             this.sellerCash = sellerCash;
             viewmodel = new AuctionViewModel();
-
-
+            this.DataContext = viewmodel;
+            ConnectionForSeller();
+        }
+        /// <summary>
+        /// ConnectionForSeller - add data for view, and make datasource for listbox
+        /// </summary>
+        private void ConnectionForSeller()
+        {
+            seller = new AukzionContractClient(new InstanceContext(this));
+            var serverLotDTOs = seller.GetAllProduct();
+            sellerWindowTitle.Title = sellerName;
+            //Створює усі колекції масивами
+            foreach (ServerLotDTO lotDTO in serverLotDTOs)
+            {
+                viewmodel.MyLot.Add(lotDTO);
+            }
+            this.DataContext = viewmodel;
+            //lbLots = new ListBox();
+            lbLots.ItemsSource = viewmodel.MyLot;
         }
 
-        
+
         /// <summary>
-        /// Callback Contract
+        /// Callback Contract 
         /// </summary>
         public void Bet()
         {

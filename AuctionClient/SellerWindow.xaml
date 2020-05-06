@@ -7,7 +7,74 @@
         mc:Ignorable="d"
         Title="SellerWindow" Height="450" Width="800"
         x:Name="sellerWindowTitle">
+    <Window.Resources>
+        <Style x:Key="textBlockStyle">
+            <Setter Property="Control.FontStyle" Value="Italic"/>
+            <Setter Property="Control.FontSize" Value="14"/>
+            <Setter Property="Control.FontWeight" Value="Light"/>
+            <Setter Property="Control.VerticalAlignment" Value="Center"/>
+            <Setter Property="Control.Margin" Value="5 0 5 0"/>
+        </Style>
+        <Style x:Key="textBlockStyle1">
+            <Setter Property="Control.FontSize" Value="14"/>
+            <Setter Property="Control.FontWeight" Value="Bold"/>
+            <Setter Property="Control.VerticalAlignment" Value="Center"/>
+            <Setter Property="Control.Margin" Value="5 0 5 0"/>
+        </Style>
+    </Window.Resources>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70*"/>
+            <RowDefinition Height="349*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="173*"/>
+            <ColumnDefinition Width="223*"/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer 
+            x:Name="scrollView1" 
+            Grid.Row="1" Grid.Column="1"
+            CanContentScroll="True" Margin="0,2,0,1">
+            <Grid Background="Blue">
+                <ListBox x:Name="lbLots" ItemsSource="{Binding}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding Path=Photo, IsAsync=True, Mode=TwoWay}" Width="100" Height="100"/>
+                                    <TextBlock Style="{StaticResource textBlockStyle}" TextDecorations="Underline">
+                                        Title:
+                                    </TextBlock>
+                                    <TextBlock 
+                                        Style="{StaticResource textBlockStyle1}"
+                                        Text="{Binding Path=Name, IsAsync=True, Mode=TwoWay}"/>
+                                    <TextBlock Style="{StaticResource textBlockStyle}">
+                                        Buyer name:
+                                    </TextBlock>
+                                    <TextBlock 
+                                        Style="{StaticResource textBlockStyle1}" 
+                                        Text="{Binding Path=BuyerName, IsAsync=True, Mode=TwoWay}"/>
+                                    <TextBlock Style="{StaticResource textBlockStyle}">
+                                        Price:
+                                    </TextBlock>
+                                    <TextBlock 
+                                        Style="{StaticResource textBlockStyle1}"
+                                        Text="{Binding Path=Price, IsAsync=True, Mode=TwoWay}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </ScrollViewer>
+        <StackPanel Grid.Row="0" Grid.Column="1" Margin="3 3 3 3" Orientation="Horizontal">
+            <Image x:Name="imgLots1" 
+                   VerticalAlignment="Center"
+                   Source="ImagesForProject/bid and buy.png" Width="50" Height="50"/>
+            <Label
+                FontSize="14" FontStyle="Italic" FontWeight="Bold"
+                Content="Lots selling" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" 
+                Width="387" Height="26"/>
+        </StackPanel>
     </Grid>
 </Window>
