@@ -28,7 +28,7 @@ namespace AuctionClient
         private void Enter_BtnClick(object sender, RoutedEventArgs e)
         {
             int buyerCash = Int32.Parse(tbBuyerCash.Text);
-            MainWindow window = new MainWindow(tbBuyerName.Text,buyerCash);
+            MainWindow window = new MainWindow(tbBuyerName.Text, buyerCash);
             window.Owner = this; //головне вікно - це.
             window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             window.Show();
@@ -37,10 +37,17 @@ namespace AuctionClient
         private void btnForSeller_Click(object sender, RoutedEventArgs e)
         {
             int sellerCash = Int32.Parse(tbSellerCash.Text);
-            SellerWindow sellerWindow = new SellerWindow(tbSellerName.Text, sellerCash);
-            sellerWindow.Owner = this;
-            sellerWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            sellerWindow.Show();
+            try
+            {
+                SellerWindow sellerWindow = new SellerWindow(tbSellerName.Text, sellerCash);
+                sellerWindow.Owner = this;
+                sellerWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                sellerWindow.Show();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
