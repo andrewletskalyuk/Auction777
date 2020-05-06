@@ -11,7 +11,7 @@ using System.Text;
 namespace AukzionLibrary
 {
     
-    [ServiceContract(CallbackContract =typeof(IAuctionCallBack))]
+    [ServiceContract(CallbackContract =typeof(IAuctionCallBack), SessionMode = SessionMode.Required)]
     public interface IAukzionContract
     {
         [OperationContract]
@@ -22,7 +22,7 @@ namespace AukzionLibrary
         void Sold(int productId,int buyerId);
         [OperationContract(IsOneWay = true)]
         void DisconnectBayer(string name);
-        [OperationContract(IsOneWay = true)]
+        [OperationContract]
         void MakeBet(string name, int productId, int bet);
         [OperationContract(IsOneWay =true)]
         void AddProductToDB(string name, decimal startPrice, string pathToPhoto);
@@ -33,7 +33,7 @@ namespace AukzionLibrary
         [OperationContract(IsOneWay = true)]
         void Bet(decimal buyerCash);
         [OperationContract(IsOneWay = true)]
-        void UpdateLotsForBuyer(ObservableCollection<ServerLotDTO> lots);
+        void UpdateLotsForBuyer(ObservableCollection<ServerLotDTO> allLots, ObservableCollection<ServerLotDTO> buyerLots);
     }
    
 }

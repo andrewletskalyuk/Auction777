@@ -11,8 +11,16 @@ namespace AuctionClient.ViewModel
 {
 	public class AuctionViewModel:INotifyPropertyChanged
 	{
-		private int _buyerCash;
+		private string _buyerName;
+		public string BuyerName
+		{
+			get { return _buyerName; }
+			set { _buyerName = value;
+				PropertyChanger("BuyerName");
+			}
+		}
 
+		private int _buyerCash;
 		public int BuyerCash
 		{
 			get { return _buyerCash; }
@@ -21,9 +29,22 @@ namespace AuctionClient.ViewModel
 			}
 		}
 
+		private ServerLotDTO _selectedLot;
+		public ServerLotDTO SelectedLot
+		{
+			get { return _selectedLot; }
+			set { _selectedLot = value; }
+		}
+
+		private ObservableCollection<ServerLotDTO> _mySelectedLot;
+		public ObservableCollection<ServerLotDTO> MySelectedLot
+		{
+			get { return _mySelectedLot; }
+			set { _mySelectedLot = value; }
+		}
+
+
 		private ObservableCollection<ServerLotDTO> _myLot;
-
-
 		public ObservableCollection<ServerLotDTO> MyLot
 		{
 			get { return _myLot; }

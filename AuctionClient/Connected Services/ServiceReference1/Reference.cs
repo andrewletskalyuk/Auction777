@@ -139,7 +139,7 @@ namespace AuctionClient.ServiceReference1 {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IAukzionContract", CallbackContract=typeof(AuctionClient.ServiceReference1.IAukzionContractCallback))]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IAukzionContract", CallbackContract=typeof(AuctionClient.ServiceReference1.IAukzionContractCallback), SessionMode=System.ServiceModel.SessionMode.Required)]
     public interface IAukzionContract {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAukzionContract/ConnectionForBuyer", ReplyAction="http://tempuri.org/IAukzionContract/ConnectionForBuyerResponse")]
@@ -166,10 +166,10 @@ namespace AuctionClient.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IAukzionContract/DisconnectBayer")]
         System.Threading.Tasks.Task DisconnectBayerAsync(string name);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IAukzionContract/MakeBet")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAukzionContract/MakeBet", ReplyAction="http://tempuri.org/IAukzionContract/MakeBetResponse")]
         void MakeBet(string name, int productId, int bet);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IAukzionContract/MakeBet")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAukzionContract/MakeBet", ReplyAction="http://tempuri.org/IAukzionContract/MakeBetResponse")]
         System.Threading.Tasks.Task MakeBetAsync(string name, int productId, int bet);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IAukzionContract/AddProductToDB")]
@@ -186,7 +186,7 @@ namespace AuctionClient.ServiceReference1 {
         void Bet(decimal buyerCash);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IAukzionContract/UpdateLotsForBuyer")]
-        void UpdateLotsForBuyer(AuctionClient.ServiceReference1.ServerLotDTO[] lots);
+        void UpdateLotsForBuyer(AuctionClient.ServiceReference1.ServerLotDTO[] allLots, AuctionClient.ServiceReference1.ServerLotDTO[] buyerLots);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
