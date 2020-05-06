@@ -94,7 +94,7 @@ namespace AukzionLibrary
         //зробимо ставку - це для Покупця
         public void MakeBet(string nameOfBuyer, int productId, int bet)
         {
-            var user = MyAuction.Buyer.FirstOrDefault(x => x.Name == nameOfBuyer);
+            var user = MyAuction.Buyer.FirstOrDefault(x => x.Name == nameOfBuyer); 
             var product = MyAuction.Product.FirstOrDefault(y => y.Id == productId);
             if (product.SellPrice > bet)
             {

@@ -1,5 +1,6 @@
 ﻿using AuctionClient.ServiceReference1;
 using AuctionClient.ViewModel;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,6 +82,15 @@ namespace AuctionClient
         public void UpdateLotsForBuyer(ServerLotDTO[] lots)
         {
             throw new NotImplementedException();
+        }
+
+        private void btnChooseThPhoto_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "*.txt | *.txt";
+            openFileDialog.ShowDialog();
+            //fileName = openFileDialog.FileName;
+            //rootFile = System.IO.Path.GetFullPath(openFileDialog.FileName);
         }
     }
 }

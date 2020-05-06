@@ -21,6 +21,51 @@
             <Setter Property="Control.VerticalAlignment" Value="Center"/>
             <Setter Property="Control.Margin" Value="5 0 5 0"/>
         </Style>
+        <Style TargetType="TextBlock" x:Key="textBlockStyleProduct">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="3"/>
+            <Setter Property="FontStyle" Value="Italic"/>
+            <Setter Property="Foreground" Value="IndianRed"/>
+        </Style>
+        <Style x:Key="textBlockProductData">
+            <Setter Property="Control.FontSize" Value="14"/>
+            <Setter Property="Control.VerticalAlignment" Value="Center"/>
+            <Setter Property="Control.Background" Value="LightCyan"/>
+        </Style>
+        <Style x:Key="btnStyle">
+            <Setter Property="Control.FontSize" Value="14"/>
+            <Setter Property="Control.FontStyle" Value="Italic"/>
+            <Setter Property="Control.Foreground" Value="White"/>
+        </Style>
+        <Style 
+            TargetType="Button" x:Key="NewGameButtonStyle">
+            <Setter Property="Foreground" Value="IndianRed"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border BorderThickness="1" 
+                                    CornerRadius="4"
+                                    Padding="2"
+                                    x:Name="ButtonBorder"
+                                    Background="AliceBlue">
+                                <Border.BorderBrush>
+                                    <SolidColorBrush x:Name="ButtonBorderBrush" Color="Gray"/>
+                                </Border.BorderBrush>
+                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" Margin="4,2" />
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#C0C0C0" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -73,8 +118,59 @@
                    Source="ImagesForProject/bid and buy.png" Width="50" Height="50"/>
             <Label
                 FontSize="14" FontStyle="Italic" FontWeight="Bold"
-                Content="Lots selling" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" 
+                Content="Lots selling" Grid.Column="1" HorizontalAlignment="Left" Margin="10,0,0,0" 
                 Width="387" Height="26"/>
         </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="0" Margin="3 3 3 3" Orientation="Horizontal">
+            <Image x:Name="imgAddProduct" 
+                   Source="ImagesForProject/addProduct.png" Width="50" Height="30"/>
+            <Label Content="Add new product"
+                   FontSize="14" FontStyle="Italic" FontWeight="Bold"
+                   VerticalAlignment="Center" Margin="5 0 0 0"/>
+        </StackPanel>
+        <Grid x:Name="spAddProduct" Grid.Row="1" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="154*"/>
+                <RowDefinition Height="102*"/>
+                <RowDefinition Height="93*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Style="{StaticResource textBlockStyleProduct}" Margin="10,5,5,121">
+                 Title of product:
+            </TextBlock>
+            <TextBox 
+                x:Name="tbNameProduct"
+                Style="{StaticResource textBlockProductData}"
+                HorizontalAlignment="Left" 
+                Height="26" Margin="10,38,0,0" TextWrapping="Wrap" 
+                VerticalAlignment="Top" Width="326"/>
+            <TextBlock Style="{StaticResource textBlockStyleProduct}" Margin="10,78,5,48"><Run Text="Start price of product:"/>
+            </TextBlock>
+            <TextBox 
+                x:Name="tbNameProductStartPrice"
+                Style="{StaticResource ResourceKey=textBlockProductData}"
+                HorizontalAlignment="Left" 
+                Height="26" Margin="10,111,0,0" TextWrapping="Wrap" 
+                VerticalAlignment="Top" Width="326"/>
+            <Image 
+                x:Name="imgForLot" Stretch="Fill"
+                HorizontalAlignment="Left" Height="100" Margin="10,1,0,0" 
+                VerticalAlignment="Top" Width="100" Grid.Row="1">
+            </Image>
+            <TextBlock Style="{StaticResource textBlockStyleProduct}" Margin="124,1,10,74" Grid.Row="1"><Run Text="Choose the photo for lot"/></TextBlock>
+            <Button 
+                x:Name="btnChooseThPhoto"
+                Click="btnChooseThPhoto_Click"
+                Content="Make it" Style="{StaticResource NewGameButtonStyle}"
+                HorizontalAlignment="Left" Margin="124,39,0,0" 
+                VerticalAlignment="Top" Width="110" Height="32" Grid.Row="1"/>
+            <TextBlock Style="{StaticResource textBlockStyleProduct}" Margin="10,3,5,61" Grid.Row="2"><Run Text="Description of product"/></TextBlock>
+            <TextBox 
+                x:Name="tbNameProductDescription"
+                Style="{StaticResource ResourceKey=textBlockProductData}"
+                HorizontalAlignment="Left" 
+                Height="51" Margin="15,32,0,0" TextWrapping="Wrap" 
+                VerticalAlignment="Top" Width="321" Grid.Row="2"/>
+
+        </Grid>
     </Grid>
 </Window>
