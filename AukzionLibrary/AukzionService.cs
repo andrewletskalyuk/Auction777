@@ -11,7 +11,7 @@ using AukzionLibrary.DTOClasses;
 
 namespace AukzionLibrary
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single,ConcurrencyMode =ConcurrencyMode.Single)]
     public class AukzionService : IAukzionContract
     {
         public Model MyAuction;
@@ -48,7 +48,7 @@ namespace AukzionLibrary
         public bool ConnectionForBuyer(string name, int money)
         {
             bool connect = false;
-
+            
           
 
             var user = MyAuction.Buyer.FirstOrDefault(n => n.Name == name);

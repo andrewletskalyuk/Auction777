@@ -102,17 +102,14 @@
         </ListBox>
         <StackPanel Grid.Column="1" Name="stTest">
 
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-
-                    <Label Style="{StaticResource lbBuyerName}"
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <Label Style="{StaticResource lbBuyerName}"
                         Content="{Binding Path=BuyerName}"></Label>
                 </StackPanel>
                 
-
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <TextBlock>UserCash:</TextBlock>
-                <TextBlock Style="{StaticResource tbList}"
-                           
+                <TextBlock Style="{StaticResource tbList}"         
                     x:Name="tbCash" Text="{Binding Path=BuyerCash,StringFormat={}{0} $}"></TextBlock>
             </StackPanel>
             <Grid>
