@@ -52,6 +52,11 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="MakeBetResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="AddProductToDB">
     <xs:complexType>
       <xs:sequence>
@@ -72,13 +77,16 @@
   </xs:element>
   <xs:element name="Bet">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="buyerCash" type="xs:decimal" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateLotsForBuyer">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/AukzionLibrary.DTOClasses" minOccurs="0" name="lots" nillable="true" type="q2:ArrayOfServerLotDTO" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/AukzionLibrary.DTOClasses" minOccurs="0" name="allLots" nillable="true" type="q2:ArrayOfServerLotDTO" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/AukzionLibrary.DTOClasses" minOccurs="0" name="buyerLots" nillable="true" type="q3:ArrayOfServerLotDTO" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -1,4 +1,4 @@
-﻿using AuctionClient.ServiceReference1;
+using AuctionClient.ServiceReference1;
 using AuctionClient.ViewModel;
 using Microsoft.Win32;
 using System;

@@ -11,7 +11,7 @@ using AukzionLibrary.DTOClasses;
 
 namespace AukzionLibrary
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class AukzionService : IAukzionContract
     {
         public Model MyAuction;
@@ -47,15 +47,18 @@ namespace AukzionLibrary
         {
             bool connect = false;
 
+
+
+            var user = MyAuction.Buyer.FirstOrDefault(n => n.Name == name);
             ServerBuyers.Add(new ServerBuyerDTO()
             {
                 Name = name,
                 Money = money,
-                operationContextCallBack = OperationContext.Current
+                operationContextCallBack = OperationContext.Current,
+                BuyerSelectedLots = new ObservableCollection<ServerLotDTO>()
             });
-
-            var user = MyAuction.Buyer.FirstOrDefault(n => n.Name == name);
-            if (user != null && MyAuction.Buyer.Count() > 0)
+            //Перевіряти на однакові імена
+            if (user != null)
             {
                 foreach (Buyer item in MyAuction.Buyer)
                 {
@@ -91,30 +94,63 @@ namespace AukzionLibrary
             ServerBuyers.Remove(buyerServer);
         }
 
+
         //зробимо ставку - це для Покупця
         public void MakeBet(string nameOfBuyer, int productId, int bet)
         {
-            var user = MyAuction.Buyer.FirstOrDefault(x => x.Name == nameOfBuyer); 
-            var product = MyAuction.Product.FirstOrDefault(y => y.Id == productId);
-            if (product.SellPrice > bet)
+
+            //var user = MyAuction.Buyer.FirstOrDefault(x => x.Name == nameOfBuyer);
+            //var product = MyAuction.Product.FirstOrDefault(y => y.Id == productId);
+
+            var user = ServerBuyers.FirstOrDefault(x => x.Name == nameOfBuyer);
+            var product = auctionLot.FirstOrDefault(y => y.Id == productId);
+
+            if (user.Money > bet)
             {
-                product.SellPrice = bet;
+                // user.Money -= bet;
+                if (product.Price < bet)
+                {
+                    //    product.SellPrice = bet;
+                }
+                else
+                {
+                    throw new InvalidOperationException("Small Price");
+                }
             }
-            //auctionLot.
+            else
+            {
+                throw new InvalidOperationException("No Chash");
+            }
+
+            //Придумати щось по типу откату ставки
             for (int i = 0; i < auctionLot.Count; i++)
             {
                 if (auctionLot[i].Name == product.Name)
                 {
-                    auctionLot[i].BuyerName = nameOfBuyer;
+                    if (auctionLot[i].BuyerName != nameOfBuyer)
+                    {
+                        if (auctionLot[i].BuyerName != "Yo")
+                        {
+
+                            ServerBuyers.FirstOrDefault(x => x.Name == auctionLot[i].BuyerName).Money += auctionLot[i].Price;
+                            ServerBuyers.FirstOrDefault(x => x.Name == auctionLot[i].BuyerName).BuyerSelectedLots.Remove(auctionLot[i]);
+                        }
+                        ServerBuyers.FirstOrDefault(x => x.Name == nameOfBuyer).Money -= bet;
+                        auctionLot[i].BuyerName = nameOfBuyer;
+                        auctionLot[i].Price = bet;
+
+                        //selected buyer lots
+                        ServerBuyers.FirstOrDefault(x => x.Name == nameOfBuyer).BuyerSelectedLots.Add(auctionLot[i]);
+                    }
                 }
             }
-
             foreach (ServerBuyerDTO item in ServerBuyers)
             {
-                item.operationContextCallBack.GetCallbackChannel<IAuctionCallBack>().UpdateLotsForBuyer(auctionLot);
+                item.operationContextCallBack.GetCallbackChannel<IAuctionCallBack>().UpdateLotsForBuyer(auctionLot, item.BuyerSelectedLots);
+                item.operationContextCallBack.GetCallbackChannel<IAuctionCallBack>().Bet((decimal)item.Money);
             }
-        }
 
+        }
         public void Sold(int productId, int buyerId) //це треба дописати
         {
             throw new NotImplementedException();
