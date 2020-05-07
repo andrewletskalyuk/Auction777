@@ -396,32 +396,32 @@
   <wsdl:message name="IAukzionContract_UpdateLotsForBuyer_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:UpdateLotsForBuyer" />
   </wsdl:message>
-  <wsdl:portType msc:usingSession="true" name="IAukzionContract">
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="ConnectionForBuyer">
+  <wsdl:portType name="IAukzionContract">
+    <wsdl:operation name="ConnectionForBuyer">
       <wsdl:input wsaw:Action="http://tempuri.org/IAukzionContract/ConnectionForBuyer" message="tns:IAukzionContract_ConnectionForBuyer_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAukzionContract/ConnectionForBuyerResponse" message="tns:IAukzionContract_ConnectionForBuyer_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllProduct">
+    <wsdl:operation name="GetAllProduct">
       <wsdl:input wsaw:Action="http://tempuri.org/IAukzionContract/GetAllProduct" message="tns:IAukzionContract_GetAllProduct_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAukzionContract/GetAllProductResponse" message="tns:IAukzionContract_GetAllProduct_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Sold">
+    <wsdl:operation name="Sold">
       <wsdl:input wsaw:Action="http://tempuri.org/IAukzionContract/Sold" message="tns:IAukzionContract_Sold_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="DisconnectBayer">
+    <wsdl:operation name="DisconnectBayer">
       <wsdl:input wsaw:Action="http://tempuri.org/IAukzionContract/DisconnectBayer" message="tns:IAukzionContract_DisconnectBayer_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="MakeBet">
+    <wsdl:operation name="MakeBet">
       <wsdl:input wsaw:Action="http://tempuri.org/IAukzionContract/MakeBet" message="tns:IAukzionContract_MakeBet_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAukzionContract/MakeBetResponse" message="tns:IAukzionContract_MakeBet_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="AddProductToDB">
+    <wsdl:operation name="AddProductToDB">
       <wsdl:input wsaw:Action="http://tempuri.org/IAukzionContract/AddProductToDB" message="tns:IAukzionContract_AddProductToDB_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Bet">
+    <wsdl:operation name="Bet">
       <wsdl:output wsaw:Action="http://tempuri.org/IAukzionContract/Bet" message="tns:IAukzionContract_Bet_OutputCallbackMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="UpdateLotsForBuyer">
+    <wsdl:operation name="UpdateLotsForBuyer">
       <wsdl:output wsaw:Action="http://tempuri.org/IAukzionContract/UpdateLotsForBuyer" message="tns:IAukzionContract_UpdateLotsForBuyer_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>

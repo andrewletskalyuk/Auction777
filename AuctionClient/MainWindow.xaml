@@ -58,7 +58,7 @@
         <Grid.Background>
             <ImageBrush ImageSource="ImagesForProject/AuctionImage.jpg" Stretch="Fill"></ImageBrush>
         </Grid.Background>
-        <ListBox  x:Name="lstAuction"  ItemsSource="{Binding}"
+        <ListBox  x:Name="lstAuction"  ItemsSource="{Binding Path=MyLot}"
                   Style="{StaticResource lstAuction}"
                   Opacity="0.95">
             <ListBox.ItemTemplate>
@@ -76,6 +76,8 @@
                         <StackPanel  Orientation="Horizontal">
                         
                         <Label Style="{StaticResource lbName}" Content="{Binding Path=Name, IsAsync=True, Mode=TwoWay}"></Label>
+                                    <TextBlock HorizontalAlignment="Right">Timer:</TextBlock>
+                                    <TextBlock DataContext="{StaticResource AucVM}" Text="{Binding Path=MyTime}"></TextBlock>
                         </StackPanel>
                         <StackPanel  Orientation="Horizontal">
                             <TextBlock>BuyerName:</TextBlock>

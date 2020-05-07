@@ -139,7 +139,7 @@ namespace AuctionClient.ServiceReference1 {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IAukzionContract", CallbackContract=typeof(AuctionClient.ServiceReference1.IAukzionContractCallback), SessionMode=System.ServiceModel.SessionMode.Required)]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IAukzionContract", CallbackContract=typeof(AuctionClient.ServiceReference1.IAukzionContractCallback))]
     public interface IAukzionContract {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAukzionContract/ConnectionForBuyer", ReplyAction="http://tempuri.org/IAukzionContract/ConnectionForBuyerResponse")]

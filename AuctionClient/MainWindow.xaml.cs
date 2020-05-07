@@ -58,24 +58,21 @@ namespace AuctionClient
         }
 
                
-        private void MakeBet_BtnClick(object sender, RoutedEventArgs e)
+        private async void MakeBet_BtnClick(object sender, RoutedEventArgs e)
         {
             ServerLotDTO makeBetLot = (lstAuction.SelectedItem as ServerLotDTO);
-            using (TransactionScope scope = new TransactionScope())
-            {
+
                 try
                 {
                     if (makeBetLot != null)
                     {
-                        client.MakeBet(viewmodel.BuyerName, makeBetLot.Id, int.Parse(tbBet.Text));
+                        await client.MakeBetAsync(viewmodel.BuyerName, makeBetLot.Id, int.Parse(tbBet.Text));
                     }
                 }
-                catch(Exception ex)
+                catch(InvalidOperationException ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
-            }
-
         }
 
         private void Windows_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -97,8 +94,8 @@ namespace AuctionClient
             {
                 updateSelectedLots.Add(item);
             }
-
-            lstBuyerLots.ItemsSource = updateSelectedLots;
+            viewmodel.MySelectedLot = updateSelectedLots;
+            lstBuyerLots.ItemsSource = viewmodel.MySelectedLot;
         }
 
         public void Bet(decimal buyerCash)

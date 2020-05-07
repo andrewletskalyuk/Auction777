@@ -11,7 +11,7 @@ using System.Text;
 namespace AukzionLibrary
 {
     
-    [ServiceContract(CallbackContract =typeof(IAuctionCallBack), SessionMode = SessionMode.Required)]
+    [ServiceContract(CallbackContract =typeof(IAuctionCallBack))]
     public interface IAukzionContract
     {
         [OperationContract]

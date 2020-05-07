@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AuctionClient.ViewModel
@@ -27,6 +28,26 @@ namespace AuctionClient.ViewModel
 			set { _buyerCash = value;
 				PropertyChanger("BuyerCash");
 			}
+		}
+
+		public void MyTimerStart(int value)
+		{
+			TimerCallback timerCallback = new TimerCallback(TimerTick);
+			//Timer timer = new Timer(timerCallback, null,0, 1000);
+
+
+		}
+
+		private void TimerTick(object state)
+		{
+			MyTime[0]++;
+		}
+
+		private ObservableCollection<int> _myTime;
+		public ObservableCollection<int> MyTime
+		{
+			get { return _myTime; }
+			set { _myTime = value; }
 		}
 
 		private ServerLotDTO _selectedLot;
