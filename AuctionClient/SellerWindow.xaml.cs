@@ -13,7 +13,7 @@ namespace AuctionClient
 {
     /// <summary>
     /// Interaction logic for SellerWindow.xaml
-    /// </summary>
+    /// </summary> //changes
     public partial class SellerWindow : Window, IAukzionContractCallback
     {
         private string sellerName;
