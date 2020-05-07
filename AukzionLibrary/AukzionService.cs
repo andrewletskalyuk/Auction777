@@ -15,12 +15,10 @@ namespace AukzionLibrary
     public class AukzionService : IAukzionContract
     {
         public Model MyAuction;
-
         public List<ServerBuyerDTO> ServerBuyers;
         public ObservableCollection<ServerLotDTO> auctionLot;
         public AukzionService()
         {
-
             MyAuction = new Model();
             ServerBuyers = new List<ServerBuyerDTO>();
             auctionLot = new ObservableCollection<ServerLotDTO>();
@@ -153,7 +151,6 @@ namespace AukzionLibrary
             }
 
         }
-
         public void Sold(int productId, int buyerId) //це треба дописати
         {
             throw new NotImplementedException();
@@ -175,6 +172,26 @@ namespace AukzionLibrary
                 Status = false
             });
             MyAuction.SaveChanges();
+        }
+
+        public async void AddProductToDBSeller(string name, decimal startPrice, string pathToPhoto)
+        {
+            var checkOutProduct = MyAuction.Product.FirstOrDefault(
+                                                        x => x.Name == name && 
+                                                        x.Photo == pathToPhoto);
+            if (checkOutProduct is null)
+            {
+                ServerLotDTO serverLotDTO = new ServerLotDTO() { 
+                    Name = name,
+                    Price = startPrice,
+                    Photo = pathToPhoto,
+                    BuyerName = "NoName",
+                    SoldPrice = startPrice,
+
+                };
+                auctionLot.Add(serverLotDTO);
+                await MyAuction.SaveChangesAsync();
+            }
         }
     }
 

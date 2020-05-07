@@ -1,17 +1,13 @@
-﻿using AuctionClient.ServiceReference1;
+using AuctionClient.ServiceReference1;
+using AuctionClient.ViewModel;
+using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace AuctionClient
 {
@@ -22,29 +18,125 @@ namespace AuctionClient
     {
         private string sellerName;
         private int sellerCash;
+        private int startPriceOfLot;
+        public AukzionContractClient seller;
+        public AuctionViewModel viewmodel { get; set; }
 
         public SellerWindow()
         {
+            viewmodel = new AuctionViewModel();
             InitializeComponent();
+            sellerName = "NoName";
+            sellerCash = 0;
+            this.DataContext = viewmodel; 
+            lbLots.ItemsSource = viewmodel.MyLot; //це треба буде переробити
         }
 
+        /// <summary>
+        /// Start window with parameters
+        /// </summary>
+        /// <param name="sellerName"></param>
+        /// <param name="sellerCash"></param>
         public SellerWindow(string sellerName, int sellerCash)
         {
+            InitializeComponent();
             this.sellerName = sellerName;
             this.sellerCash = sellerCash;
-
+            viewmodel = new AuctionViewModel();
+            this.DataContext = viewmodel;
+            ConnectionForSeller();
+        }
+        /// <summary>
+        /// ConnectionForSeller - add data for view, and make datasource for listbox
+        /// </summary>
+        private void ConnectionForSeller()
+        {
+            seller = new AukzionContractClient(new InstanceContext(this));
+            var serverLotDTOs = seller.GetAllProduct();
+            sellerWindowTitle.Title = sellerName;
+            //Створює усі колекції масивами
+            foreach (ServerLotDTO lotDTO in serverLotDTOs)
+            {
+                viewmodel.MyLot.Add(lotDTO);
+            }
+            this.DataContext = viewmodel;
+            //lbLots = new ListBox();
+            lbLots.ItemsSource = viewmodel.MyLot;
         }
 
+        private void btnChooseThPhoto_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files|*.png;*.jpeg;*.jpg";
+            openFileDialog.ShowDialog();
+            var sourceFilePath = openFileDialog.FileName;
+            var destinantionFilePath = Directory.GetCurrentDirectory() + 
+                                        $"\\ImagesForLots\\" + 
+                                        System.IO.Path.GetFileName(sourceFilePath);
+            File.Copy(sourceFilePath, destinantionFilePath, true);
+
+            Image lotImage = new Image();
+            //lotImage.Width = 100;
+            //lotImage.Height = 100;
+
+            BitmapImage bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.UriSource = new Uri(destinantionFilePath);
+            bitmapImage.EndInit();
+
+            lotImage.Source = bitmapImage;
+
+            imageForLot.Source = bitmapImage;
+        }
+
+        private async void btnCreateNewLot_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsCorrectDataNewProduct(tbNameProduct.Text, tbNameProductStartPrice.Text, imageForLot.Source))
+            {
+                var tempPriceLot = Int32.Parse(tbNameProductStartPrice.Text);
+                ServerLotDTO serverLotDTO = new ServerLotDTO()
+                {
+                    Name = tbNameProduct.Text,
+                    BuyerName = "Just added product",
+                    Price = tempPriceLot,
+                    SoldPrice = tempPriceLot,
+                    Photo = imageForLot.Source.ToString()
+                };
+                await seller.AddProductToDBSellerAsync(serverLotDTO.Name, serverLotDTO.Price, serverLotDTO.Photo);
+                viewmodel.MyLot.Add(serverLotDTO);
+                lbLots.ItemsSource = viewmodel.MyLot;
+            }
+            else
+            {
+                MessageBox.Show("Incorrect data's put in");
+            }
+        }
         
         /// <summary>
-        /// Callback Contract
+        /// Check out for correct data which putting in
         /// </summary>
-        public void Bet()
+        /// <param name="nameProduct"></param>
+        /// <param name="startPrice"></param>
+        /// <param name="sourceOfProduct"></param>
+        /// <returns></returns>
+        private bool IsCorrectDataNewProduct(string nameProduct, string startPrice, ImageSource sourceOfProduct)
         {
-            throw new NotImplementedException();
+            if (!String.IsNullOrEmpty(nameProduct)
+                && Int32.TryParse(startPrice, out startPriceOfLot)
+                && sourceOfProduct!=null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
-        public void Bet(decimal buyerCash)
+        /// <summary>
+        /// Callback Contract 
+        /// </summary>
+        public void Bet()
         {
             throw new NotImplementedException();
         }

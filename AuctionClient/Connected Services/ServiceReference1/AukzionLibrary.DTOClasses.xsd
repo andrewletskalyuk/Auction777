@@ -12,8 +12,8 @@
       <xs:element minOccurs="0" name="Id" type="xs:int" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Photo" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Price" type="xs:int" />
-      <xs:element minOccurs="0" name="SoldPrice" type="xs:int" />
+      <xs:element minOccurs="0" name="Price" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoldPrice" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ServerLotDTO" nillable="true" type="tns:ServerLotDTO" />

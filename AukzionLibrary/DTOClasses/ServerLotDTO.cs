@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,13 +21,12 @@ namespace AukzionLibrary.DTOClasses
             set
             {
                 _name = value;
-
             }
         }
 
-        private int _price;
+        private decimal _price;
 
-        public int Price
+        public decimal Price
         {
             get { return _price; }
             set
@@ -35,9 +36,9 @@ namespace AukzionLibrary.DTOClasses
             }
         }
 
-        private int _soldPrice;
+        private decimal _soldPrice;
 
-        public int SoldPrice
+        public decimal SoldPrice
         {
             get { return _soldPrice; }
             set

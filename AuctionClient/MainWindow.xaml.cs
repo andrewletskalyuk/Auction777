@@ -16,9 +16,7 @@ namespace AuctionClient
     {
         
         public AukzionContractClient client;
-
         public AuctionViewModel viewmodel { get; set; }
-
         public MainWindow()
         {
             viewmodel = new AuctionViewModel();

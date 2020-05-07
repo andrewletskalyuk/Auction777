@@ -26,6 +26,8 @@ namespace AukzionLibrary
         void MakeBet(string name, int productId, int bet);
         [OperationContract(IsOneWay =true)]
         void AddProductToDB(string name, decimal startPrice, string pathToPhoto);
+        [OperationContract(IsOneWay = true)]
+        void AddProductToDBSeller(string name, decimal startPrice, string pathToPhoto);
     }
 
     public interface IAuctionCallBack
