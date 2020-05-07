@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ServiceModel;
+using System.Transactions;
 using System.Windows;
 using AuctionClient.ServiceReference1;
 using AuctionClient.ViewModel;
@@ -16,68 +17,68 @@ namespace AuctionClient
         
         public AukzionContractClient client;
         public AuctionViewModel viewmodel { get; set; }
-        string buyerName;
-        int buyerMoney;
         public MainWindow()
         {
             viewmodel = new AuctionViewModel();
             InitializeComponent();
-            buyerMoney = 0;
-            buyerName = "None";
-            this.DataContext = viewmodel;
+
+            stTest.DataContext = viewmodel;
+            client = new AukzionContractClient(new InstanceContext(this));
+          //  var connection = client.ConnectionForBuyer("None", 0);
+            GetProducts("None",1000000);
+
             lstAuction.ItemsSource = viewmodel.MyLot;
         }
         public MainWindow(string name, int money)
         {
             viewmodel = new AuctionViewModel();
             InitializeComponent();
-            buyerMoney = money;
-            buyerName = name;
 
+            stTest.DataContext = viewmodel;
             client = new AukzionContractClient(new InstanceContext(this));
+            var connection = client.ConnectionForBuyer(name,money);
+            //Вибираємо лоти для viewmodel
+            GetProducts(name,money);
+           
 
-            var connection = client.ConnectionForBuyer(buyerName, buyerMoney);
-
+            lstAuction.ItemsSource = viewmodel.MyLot;
+        }
+        public void GetProducts(string name,int money)
+        {
             var obj = client.GetAllProduct();
             //Створює усі колекції масивами
             foreach (ServerLotDTO item in obj)
             {
                 viewmodel.MyLot.Add(item);
             }
-            this.DataContext = viewmodel;
-            lstAuction.ItemsSource = viewmodel.MyLot;
+            viewmodel.BuyerCash = money;
+            viewmodel.BuyerName = name;
         }
 
-        public void Bet()
-        {
-            throw new NotImplementedException();
-        }
                
-        private void MakeBet_BtnClick(object sender, RoutedEventArgs e)
+        private async void MakeBet_BtnClick(object sender, RoutedEventArgs e)
         {
             ServerLotDTO makeBetLot = (lstAuction.SelectedItem as ServerLotDTO);
-            for (int i = 0; i < viewmodel.MyLot.Count; i++)
-            {
-                if (makeBetLot == viewmodel.MyLot[i])
-                {
-                    viewmodel.MyLot[i].BuyerName = buyerName;
-                    //  buyerMoney -= viewmodel.MyLot[i].SoldPrice;
-                }
-            }
-            //Передача ціни та Ід
-            if (makeBetLot != null)
-            {
-                client.MakeBet(buyerName, makeBetLot.Id, 1000000);
-            }
 
+                try
+                {
+                    if (makeBetLot != null)
+                    {
+                        await client.MakeBetAsync(viewmodel.BuyerName, makeBetLot.Id, int.Parse(tbBet.Text));
+                    }
+                }
+                catch(InvalidOperationException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
         }
 
         private void Windows_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            client.DisconnectBayer(buyerName);
+            client.DisconnectBayer(viewmodel.BuyerName);
         }
 
-        public void UpdateLotsForBuyer(ServerLotDTO[] lots)
+        public void UpdateLotsForBuyer(ServerLotDTO[] lots, ServerLotDTO[] lotsForBuyer)
         {
             ObservableCollection<ServerLotDTO> update = new ObservableCollection<ServerLotDTO>();
             foreach (ServerLotDTO item in lots)
@@ -86,7 +87,18 @@ namespace AuctionClient
             }
             viewmodel.MyLot = update;
             lstAuction.ItemsSource = update;
-            this.DataContext = viewmodel;
+            ObservableCollection<ServerLotDTO> updateSelectedLots = new ObservableCollection<ServerLotDTO>();
+            foreach (ServerLotDTO item in lotsForBuyer)
+            {
+                updateSelectedLots.Add(item);
+            }
+            viewmodel.MySelectedLot = updateSelectedLots;
+            lstBuyerLots.ItemsSource = viewmodel.MySelectedLot;
+        }
+
+        public void Bet(decimal buyerCash)
+        {           
+            viewmodel.BuyerCash = (int)buyerCash;
         }
     }
 }

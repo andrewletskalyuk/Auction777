@@ -4,42 +4,174 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AuctionClient"
+        xmlns:b="clr-namespace:AuctionClient.ViewModel"
         mc:Ignorable="d"
         x:Name="mainWindowTitle"
         Title="MainWindow" Height="450" Width="800"
         Closing="Windows_Closing">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <ListBox x:Name="lstAuction" ItemsSource="{Binding}">
+    <Window.Resources>
+        <b:AuctionViewModel x:Key="AucVM"></b:AuctionViewModel>
+        <Style TargetType="TextBlock" x:Key="tbLotInfo">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="7"/>
+            <Setter Property="Padding" Value="3"/>
+            <Setter Property="FontStyle" Value="Normal"></Setter>
+
+        </Style>
+        <Style TargetType="TextBlock" x:Key="tbList">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="3"/>
+            <Setter Property="FontStyle" Value="Italic"></Setter>
+            <Setter Property="Foreground" Value="IndianRed"/>
+        </Style>
+        <Style TargetType="Label" x:Key="lbBuyerName">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="3"/>
+            <Setter Property="FontFamily" Value="Time New Roman"/>
+            <Setter Property="FontStyle" Value="Normal"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="Foreground" Value="DarkBlue"/>
+        </Style>
+        <Style TargetType="Label" x:Key="lbName">
+            <Setter Property="FontStyle" Value="Oblique"/>
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="Foreground" Value="DarkOliveGreen"/>
+        </Style>
+        <Style TargetType="ListBox" x:Key="lstAuction">
+            <!--<Setter Property="Background" Value="Orange"></Setter>-->
+            <Setter Property="Margin" Value="15"/>
+            <Setter Property="Padding" Value="10"></Setter>
+            <Setter Property="MaxWidth" Value="400"></Setter>
+        </Style>
+        <Style TargetType="ListBox">
+            <Setter Property="MinHeight" Value="75"/>
+            <Setter Property="DisplayMemberPath" Value="Name"></Setter>
+        </Style>
+
+    </Window.Resources>
+    <Grid DataContext="{StaticResource AucVM}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.Background>
+            <ImageBrush ImageSource="ImagesForProject/AuctionImage.jpg" Stretch="Fill"></ImageBrush>
+        </Grid.Background>
+        <ListBox  x:Name="lstAuction"  ItemsSource="{Binding Path=MyLot}"
+                  Style="{StaticResource lstAuction}"
+                  Opacity="0.95">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                        <TextBlock>LotName:</TextBlock>
-                        <TextBlock Text="{Binding Path=Name, IsAsync=True, Mode=TwoWay}"></TextBlock>
+                    <Border 
+                        BorderBrush="Black"
+                         BorderThickness="3"
+            CornerRadius="10 10 10 10">
+                    <Grid MinWidth="300" MaxWidth="350" HorizontalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.5*"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="1">
+                        <StackPanel  Orientation="Horizontal">
+                        
+                        <Label Style="{StaticResource lbName}" Content="{Binding Path=Name, IsAsync=True, Mode=TwoWay}"></Label>
+                                    <TextBlock HorizontalAlignment="Right">Timer:</TextBlock>
+                                    <TextBlock DataContext="{StaticResource AucVM}" Text="{Binding Path=MyTime}"></TextBlock>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock>Price:</TextBlock>
-                            <TextBlock Text="{Binding Path=Price, IsAsync=True, Mode=TwoWay}"></TextBlock>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel  Orientation="Horizontal">
                             <TextBlock>BuyerName:</TextBlock>
-                            <TextBlock Text="{Binding Path=BuyerName, IsAsync=True, Mode=TwoWay}"></TextBlock>
+                            
+                            <TextBlock Style="{StaticResource tbList}" Foreground="DarkSlateBlue"
+                                       Text="{Binding Path=BuyerName, IsAsync=True, Mode=TwoWay}"></TextBlock>
+                            
                         </StackPanel>
-                        <StackPanel>
-                            <Image Source="{Binding Path=Photo, IsAsync=True, Mode=TwoWay}" MaxHeight="150"></Image>
+                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" >
+                            <TextBlock Foreground="Black">SellPrice:</TextBlock>
+                            <TextBlock Style="{StaticResource tbList}" Text="{Binding Path=Price, IsAsync=True, Mode=TwoWay,StringFormat={}{0} $}"></TextBlock>
                         </StackPanel>
-                    </StackPanel>
-                    
+                            </StackPanel>
+                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <Image Source="{Binding Path=Photo, IsAsync=True, Mode=TwoWay}" MaxHeight="100"></Image>
+                        </StackPanel>
+                            <StackPanel>
+                                <TextBlock FontSize="25">Time per coll:</TextBlock>
+                            </StackPanel>
+                    </Grid>
+                    </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <StackPanel Grid.Row="1">
-            <Button
-                Click="MakeBet_BtnClick">MakeBet</Button>
+        <StackPanel Grid.Column="1" Name="stTest">
+
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <Label Style="{StaticResource lbBuyerName}"
+                        Content="{Binding Path=BuyerName}"></Label>
+                </StackPanel>
+                
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <TextBlock>UserCash:</TextBlock>
+                <TextBlock Style="{StaticResource tbList}"         
+                    x:Name="tbCash" Text="{Binding Path=BuyerCash,StringFormat={}{0} $}"></TextBlock>
+            </StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+            <TextBlock HorizontalAlignment="Center"
+                       FontSize="17"
+                       FontStyle="Italic"
+                       Margin="2">User selected lots</TextBlock>
+                    <ListBox x:Name="lstBuyerLots"></ListBox>
+                </StackPanel>
+                <StackPanel Grid.Row="1">
+                    <TextBlock HorizontalAlignment="Center"
+                       FontSize="17"
+                       FontStyle="Italic"
+                       Margin="2">Bought lots</TextBlock>
+                    <ListBox></ListBox>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Grid.RowSpan="2"
+                            DataContext="{Binding ElementName=lstBuyerLots,Path=SelectedItem}"
+                            >
+                    <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource tbLotInfo}">ProductName:</TextBlock>
+                        <TextBlock Text="{Binding Path=Name}" Style="{StaticResource tbLotInfo}"></TextBlock>
+                    </StackPanel>
+                    <StackPanel>
+                    <TextBlock Style="{StaticResource tbLotInfo}">ProductSetPrice:</TextBlock>
+                    <TextBlock Text="{Binding Path=Price,StringFormat={}{0} $}" Style="{StaticResource tbLotInfo}"></TextBlock>
+                    </StackPanel>
+                    <Image MaxHeight="75" Source="{Binding Path=Photo}"></Image>
+                </StackPanel>
+            </Grid>
+            <Border  Margin="11"
+                BorderBrush="Black"
+                         BorderThickness="3"
+ >
+            <StackPanel Margin="7" Orientation="Horizontal">
+
+            <Button Margin="10" BorderThickness="2" Padding="11" Background="GreenYellow"
+                Click="MakeBet_BtnClick" Height="50">MakeBet</Button>
+
+                    <StackPanel>
+                <Slider Margin="7" 
+                    x:Name="sliderBet" Width="250" HorizontalAlignment="Right" Height="30" Maximum="{Binding Path=BuyerCash}"
+                        IsSnapToTickEnabled="True" TickFrequency="500" TickPlacement="Both"></Slider>
+                <TextBlock>Bet:</TextBlock>
+                <TextBox x:Name="tbBet" 
+                         MinWidth="20"
+                         Text="{Binding ElementName=sliderBet,Path=Value,Mode=TwoWay}"></TextBox>
+                    </StackPanel>
+                </StackPanel>
+                
+            </Border>
         </StackPanel>
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AukzionLibrary.DTOClasses;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace AukzionLibrary.DTOClass
         public string  Name { get; set; }
         public int Money { get; set; }
         public OperationContext operationContextCallBack { get; set; }
+        public ObservableCollection<ServerLotDTO> BuyerSelectedLots { get; set; }
     }
 }

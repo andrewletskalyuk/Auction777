@@ -22,7 +22,7 @@ namespace AukzionLibrary
         void Sold(int productId,int buyerId);
         [OperationContract(IsOneWay = true)]
         void DisconnectBayer(string name);
-        [OperationContract(IsOneWay = true)]
+        [OperationContract]
         void MakeBet(string name, int productId, int bet);
         [OperationContract(IsOneWay =true)]
         void AddProductToDB(string name, decimal startPrice, string pathToPhoto);
@@ -33,9 +33,9 @@ namespace AukzionLibrary
     public interface IAuctionCallBack
     {
         [OperationContract(IsOneWay = true)]
-        void Bet();
+        void Bet(decimal buyerCash);
         [OperationContract(IsOneWay = true)]
-        void UpdateLotsForBuyer(ObservableCollection<ServerLotDTO> lots);
+        void UpdateLotsForBuyer(ObservableCollection<ServerLotDTO> allLots, ObservableCollection<ServerLotDTO> buyerLots);
     }
    
 }
