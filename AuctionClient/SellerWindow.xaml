@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AuctionClient"
         mc:Ignorable="d"
-        Title="SellerWindow" Height="450" Width="800"
+        Title="SellerWindow" Height="517" Width="800"
         x:Name="sellerWindowTitle">
     <Window.Resources>
         <Style x:Key="textBlockStyle">
@@ -114,15 +114,15 @@
         </ScrollViewer>
         <StackPanel Grid.Row="0" Grid.Column="1" Margin="3 3 3 3" Orientation="Horizontal">
             <Image x:Name="imgLots1" 
-                   VerticalAlignment="Center"
+                   VerticalAlignment="Center" Margin="10"
                    Source="ImagesForProject/bid and buy.png" Width="50" Height="50"/>
             <Label
                 FontSize="14" FontStyle="Italic" FontWeight="Bold"
-                Content="Lots selling" Grid.Column="1" HorizontalAlignment="Left" Margin="10,0,0,0" 
-                Width="387" Height="26"/>
+                Content="Lots selling" Grid.Column="1" HorizontalAlignment="Left" Margin="10,24,0,25" 
+                Width="344" Height="26"/>
         </StackPanel>
         <StackPanel Grid.Row="0" Grid.Column="0" Margin="3 3 3 3" Orientation="Horizontal">
-            <Image x:Name="imgAddProduct" 
+            <Image x:Name="imgAddProduct" Margin="10"
                    Source="ImagesForProject/addProduct.png" Width="50" Height="30"/>
             <Label Content="Add new product"
                    FontSize="14" FontStyle="Italic" FontWeight="Bold"
@@ -130,47 +130,59 @@
         </StackPanel>
         <Grid x:Name="spAddProduct" Grid.Row="1" Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="154*"/>
-                <RowDefinition Height="102*"/>
-                <RowDefinition Height="93*"/>
+                <RowDefinition Height="140*"/>
+                <RowDefinition Height="113*"/>
+                <RowDefinition Height="138*"/>
             </Grid.RowDefinitions>
-            <TextBlock Style="{StaticResource textBlockStyleProduct}" Margin="10,5,5,121">
+            <TextBlock Style="{StaticResource textBlockStyleProduct}" Margin="10,10,10,106">
                  Title of product:
             </TextBlock>
             <TextBox 
                 x:Name="tbNameProduct"
                 Style="{StaticResource textBlockProductData}"
                 HorizontalAlignment="Left" 
-                Height="26" Margin="10,38,0,0" TextWrapping="Wrap" 
+                Height="26" Margin="10,39,0,0" TextWrapping="Wrap" 
                 VerticalAlignment="Top" Width="326"/>
-            <TextBlock Style="{StaticResource textBlockStyleProduct}" Margin="10,78,5,48"><Run Text="Start price of product:"/>
+            <TextBlock Style="{StaticResource textBlockStyleProduct}" Margin="10,70,10,46"><Run Text="Start price of product:"/>
             </TextBlock>
             <TextBox 
                 x:Name="tbNameProductStartPrice"
                 Style="{StaticResource ResourceKey=textBlockProductData}"
                 HorizontalAlignment="Left" 
-                Height="26" Margin="10,111,0,0" TextWrapping="Wrap" 
+                Height="26" Margin="10,99,0,0" TextWrapping="Wrap" 
                 VerticalAlignment="Top" Width="326"/>
             <Image 
-                x:Name="imgForLot" Stretch="Fill"
+                x:Name="imageForLot" Stretch="Fill"
+                Source="{Binding}"
                 HorizontalAlignment="Left" Height="100" Margin="10,1,0,0" 
                 VerticalAlignment="Top" Width="100" Grid.Row="1">
             </Image>
-            <TextBlock Style="{StaticResource textBlockStyleProduct}" Margin="124,1,10,74" Grid.Row="1"><Run Text="Choose the photo for lot"/></TextBlock>
+            <TextBlock Style="{StaticResource textBlockStyleProduct}" Margin="124,1,10,84" Grid.Row="1"><Run Text="Choose the photo for lot"/></TextBlock>
             <Button 
                 x:Name="btnChooseThPhoto"
                 Click="btnChooseThPhoto_Click"
                 Content="Make it" Style="{StaticResource NewGameButtonStyle}"
                 HorizontalAlignment="Left" Margin="124,39,0,0" 
                 VerticalAlignment="Top" Width="110" Height="32" Grid.Row="1"/>
-            <TextBlock Style="{StaticResource textBlockStyleProduct}" Margin="10,3,5,61" Grid.Row="2"><Run Text="Description of product"/></TextBlock>
+            <TextBlock Style="{StaticResource textBlockStyleProduct}" Margin="10,3,5,111" Grid.Row="2">
+                Couple words about product
+            </TextBlock>
             <TextBox 
                 x:Name="tbNameProductDescription"
                 Style="{StaticResource ResourceKey=textBlockProductData}"
                 HorizontalAlignment="Left" 
                 Height="51" Margin="15,32,0,0" TextWrapping="Wrap" 
                 VerticalAlignment="Top" Width="321" Grid.Row="2"/>
-
+            <Button 
+                x:Name="btnCreateNewLot"
+                Click="btnCreateNewLot_Click"
+                Style="{StaticResource NewGameButtonStyle}"
+                HorizontalAlignment="Left" Margin="15,96,0,0" 
+                VerticalAlignment="Top" Width="95" Height="37" Grid.Row="2">
+                <StackPanel Orientation="Horizontal">
+                    <Image x:Name="c1" Source="ImagesForProject/CreateButton1.jpg" Width="60" Height="30"/>
+                </StackPanel>
+            </Button>
         </Grid>
     </Grid>
 </Window>

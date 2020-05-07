@@ -2,19 +2,12 @@
 using AuctionClient.ViewModel;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace AuctionClient
 {
@@ -25,6 +18,7 @@ namespace AuctionClient
     {
         private string sellerName;
         private int sellerCash;
+        private int startPriceOfLot;
         public AukzionContractClient seller;
         public AuctionViewModel viewmodel { get; set; }
 
@@ -34,8 +28,8 @@ namespace AuctionClient
             InitializeComponent();
             sellerName = "NoName";
             sellerCash = 0;
-            this.DataContext = viewmodel;
-            lbLots.ItemsSource = viewmodel.MyLot;
+            this.DataContext = viewmodel; 
+            lbLots.ItemsSource = viewmodel.MyLot; //це треба буде переробити
         }
 
         /// <summary>
@@ -70,6 +64,74 @@ namespace AuctionClient
             lbLots.ItemsSource = viewmodel.MyLot;
         }
 
+        private void btnChooseThPhoto_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files|*.png;*.jpeg;*.jpg";
+            openFileDialog.ShowDialog();
+            var sourceFilePath = openFileDialog.FileName;
+            var destinantionFilePath = Directory.GetCurrentDirectory() + 
+                                        $"\\ImagesForLots\\" + 
+                                        System.IO.Path.GetFileName(sourceFilePath);
+            File.Copy(sourceFilePath, destinantionFilePath, true);
+
+            Image lotImage = new Image();
+            //lotImage.Width = 100;
+            //lotImage.Height = 100;
+
+            BitmapImage bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.UriSource = new Uri(destinantionFilePath);
+            bitmapImage.EndInit();
+
+            lotImage.Source = bitmapImage;
+
+            imageForLot.Source = bitmapImage;
+        }
+
+        private async void btnCreateNewLot_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsCorrectDataNewProduct(tbNameProduct.Text, tbNameProductStartPrice.Text, imageForLot.Source))
+            {
+                var tempPriceLot = Int32.Parse(tbNameProductStartPrice.Text);
+                ServerLotDTO serverLotDTO = new ServerLotDTO()
+                {
+                    Name = tbNameProduct.Text,
+                    BuyerName = "Just added product",
+                    Price = tempPriceLot,
+                    SoldPrice = tempPriceLot,
+                    Photo = imageForLot.Source.ToString()
+                };
+                await seller.AddProductToDBSellerAsync(serverLotDTO.Name, serverLotDTO.Price, serverLotDTO.Photo);
+                viewmodel.MyLot.Add(serverLotDTO);
+                lbLots.ItemsSource = viewmodel.MyLot;
+            }
+            else
+            {
+                MessageBox.Show("Incorrect data's put in");
+            }
+        }
+        
+        /// <summary>
+        /// Check out for correct data which putting in
+        /// </summary>
+        /// <param name="nameProduct"></param>
+        /// <param name="startPrice"></param>
+        /// <param name="sourceOfProduct"></param>
+        /// <returns></returns>
+        private bool IsCorrectDataNewProduct(string nameProduct, string startPrice, ImageSource sourceOfProduct)
+        {
+            if (!String.IsNullOrEmpty(nameProduct)
+                && Int32.TryParse(startPrice, out startPriceOfLot)
+                && sourceOfProduct!=null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         /// <summary>
         /// Callback Contract 
@@ -82,15 +144,6 @@ namespace AuctionClient
         public void UpdateLotsForBuyer(ServerLotDTO[] lots)
         {
             throw new NotImplementedException();
-        }
-
-        private void btnChooseThPhoto_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Jpeg files (*.jpeg) | *.jpg | Png files (*.png) | *.png";
-            openFileDialog.ShowDialog();
-            var fileName = openFileDialog.FileName;
-            var rootFile = System.IO.Path.GetFullPath(openFileDialog.FileName);
         }
     }
 }
