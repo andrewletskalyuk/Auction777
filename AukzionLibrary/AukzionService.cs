@@ -131,8 +131,7 @@ namespace AukzionLibrary
                     {
                         if (auctionLot[i].BuyerName != "Yo")
                         {
-
-                            ServerBuyers.FirstOrDefault(x => x.Name == auctionLot[i].BuyerName).Money += auctionLot[i].Price;
+                            ServerBuyers.FirstOrDefault(x => x.Name == auctionLot[i].BuyerName).Money += (int)auctionLot[i].Price;
                             ServerBuyers.FirstOrDefault(x => x.Name == auctionLot[i].BuyerName).BuyerSelectedLots.Remove(auctionLot[i]);
                         }
                         ServerBuyers.FirstOrDefault(x => x.Name == nameOfBuyer).Money -= bet;

@@ -136,12 +136,12 @@ namespace AuctionClient
         /// <summary>
         /// Callback Contract 
         /// </summary>
-        public void Bet()
+        public void Bet(decimal buyerCash)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateLotsForBuyer(ServerLotDTO[] lots)
+        public void UpdateLotsForBuyer(ServerLotDTO[] allLots, ServerLotDTO[] buyerLots)
         {
             throw new NotImplementedException();
         }
