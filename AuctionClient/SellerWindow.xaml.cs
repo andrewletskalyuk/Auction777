@@ -87,10 +87,10 @@ namespace AuctionClient
         private void btnChooseThPhoto_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "*.txt | *.txt";
+            openFileDialog.Filter = "Jpeg files (*.jpeg) | *.jpg | Png files (*.png) | *.png";
             openFileDialog.ShowDialog();
-            //fileName = openFileDialog.FileName;
-            //rootFile = System.IO.Path.GetFullPath(openFileDialog.FileName);
+            var fileName = openFileDialog.FileName;
+            var rootFile = System.IO.Path.GetFullPath(openFileDialog.FileName);
         }
     }
 }
