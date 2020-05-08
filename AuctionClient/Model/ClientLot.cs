@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AuctionClient.TimerClass;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace AuctionClient.LotModel
 {
      public class ClientLot:INotifyPropertyChanged
     {
+        public TimeClass MyTimeClass { get; set; }
+
 
         public int iD;
 
@@ -17,7 +20,7 @@ namespace AuctionClient.LotModel
         {
             get { return _info; }
             set { _info = value;
-                PropertyChange("Info");
+                OnPropertyChanged("Info");
             }
         }
 
@@ -27,7 +30,7 @@ namespace AuctionClient.LotModel
         {
             get { return _buyerName; }
             set { _buyerName = value;
-                PropertyChange("BuyerName");
+                OnPropertyChanged("BuyerName");
             }
         }
 
@@ -40,7 +43,7 @@ namespace AuctionClient.LotModel
             set
             {
                 _name = value;
-                PropertyChange("Name");
+                OnPropertyChanged("Name");
             }
         }
 
@@ -51,7 +54,7 @@ namespace AuctionClient.LotModel
             set
             {
                 _price = value;
-                PropertyChange("Price");
+                OnPropertyChanged("Price");
             }
         }
 
@@ -62,30 +65,30 @@ namespace AuctionClient.LotModel
             set
             {
                 _soldPrice = value;
-                PropertyChange("SoldPrice");
+                OnPropertyChanged("SoldPrice");
             }
         }
 
-        private string _photo;
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public void PropertyChange(string propertyName)
+        public void OnPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
+        private string _photo;
         public string Photo
         {
             get { return _photo; }
             set
             {
                 _photo = value;
-
+                OnPropertyChanged("Photo");
             }
         }
         public ClientLot()
         {
-
+            MyTimeClass = new TimeClass();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using System.Transactions;
 using System.Windows;
 using AuctionClient.LotModel;
@@ -28,22 +29,22 @@ namespace AuctionClient
           //  var connection = client.ConnectionForBuyer("None", 0);
             GetProducts("None",1000000);
 
-          //  lstAuction.ItemsSource = viewmodel.MyLot;
+         //   lstAuction.ItemsSource = viewmodel.MyLot;
         }
         public MainWindow(string name, int money)
         {
             viewmodel = new AuctionViewModel();
             InitializeComponent();
-
+            TimerCheck();
             stTest.DataContext = viewmodel;
             client = new AukzionContractClient(new InstanceContext(this));
             var connection = client.ConnectionForBuyer(name,money);
             if (connection)
-            { //Вибираємо лоти для viewmodel
+            { 
+                //Вибираємо лоти для viewmodel
                 GetProducts(name, money);
-
-
                 lstAuction.ItemsSource = viewmodel.ClientLots;
+               
             }
             else
             {
@@ -59,23 +60,45 @@ namespace AuctionClient
             {
                 viewmodel.ClientLots.Add(new ClientLot()
                 {
-                    iD=item.Id,
-                    BuyerName = "None",
+                    iD = item.Id,
+                    BuyerName = item.BuyerName,
                     Price = item.Price,
-                    Name=item.Name,
-                    Info="Non info",
-                    Photo=item.Photo
-                });
+                    Name = item.Name,
+                    Info = "Non info",
+                    Photo = item.Photo
+                  //  MyTimeClass = new TimerClass.TimeClass()
+                }) ;
             }
-            //foreach (ServerLotDTO item in obj)
-            //{
-            //    viewmodel.MyLot.Add(item);
-            //}
+         
             viewmodel.BuyerCash = money;
             viewmodel.BuyerName = name;
         }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            viewmodel.MyTimerStart(0);
+        }
 
-               
+
+        public void TimerCheck()
+        {
+          Task.Run(() =>
+            {
+                do
+                {
+                    for (int i = 0; i < viewmodel.ClientLots.Count; i++)
+                    {
+                        if (viewmodel.ClientLots[i].MyTimeClass.IsEn)
+                            client.Sold(i, 0);
+
+                    }
+
+
+                } while (true);
+            }
+            );
+        }
+
+
         private async void MakeBet_BtnClick(object sender, RoutedEventArgs e)
         {
 
@@ -87,6 +110,7 @@ namespace AuctionClient
                 {
                     if (makeBetLot != null)
                     {
+                       
                         await client.MakeBetAsync(viewmodel.BuyerName, makeBetLot.iD, (int)isSelectedPrice);
                     }
                 }
@@ -132,9 +156,10 @@ namespace AuctionClient
                     Photo = item.Photo
                 });
             }
+
             viewmodel.ClientLots = clientLot;
-            lstAuction.ItemsSource = clientLot;
-          //  lstBuyerLots.ItemsSource = clientLot;
+            lstAuction.ItemsSource = viewmodel.ClientLots;
+
             //ObservableCollection<ServerLotDTO> updateSelectedLots = new ObservableCollection<ServerLotDTO>();
             //foreach (ServerLotDTO item in lotsForBuyer)
             //{
@@ -148,5 +173,7 @@ namespace AuctionClient
         {           
             viewmodel.BuyerCash = (int)buyerCash;
         }
+
+       
     }
 }

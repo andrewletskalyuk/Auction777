@@ -68,8 +68,7 @@ namespace AuctionClient
                     Photo = item.Photo
                 });
             }
-        //    this.DataContext = viewmodel;
-            //lbLots = new ListBox();
+
             lbLots.ItemsSource = viewmodel.ClientLots;
         }
 
@@ -103,17 +102,7 @@ namespace AuctionClient
             if (IsCorrectDataNewProduct(tbNameProduct.Text, tbNameProductStartPrice.Text, imageForLot.Source))
             {
                 var tempPriceLot = Int32.Parse(tbNameProductStartPrice.Text);
-                //ServerLotDTO serverLotDTO = new ServerLotDTO()
-                //{
-                //    Name = tbNameProduct.Text,
-                //    BuyerName = "Just added product",
-                //    Price = tempPriceLot,
-                //    SoldPrice = tempPriceLot,
-                //    Photo = imageForLot.Source.ToString()
-                //};
-                //await seller.AddProductToDBSellerAsync(serverLotDTO.Name, serverLotDTO.Price, serverLotDTO.Photo);
-                //viewmodel.MyLot.Add(serverLotDTO);
-                // lbLots.ItemsSource = viewmodel.MyLot;
+
 
                 ClientLot sellerLot = new ClientLot()              
                 {
@@ -158,12 +147,14 @@ namespace AuctionClient
         /// <summary>
         /// Callback Contract 
         /// </summary>
-        public void Bet()
+    
+
+        public void Bet(decimal buyerCash)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateLotsForBuyer(ServerLotDTO[] lots)
+        public void UpdateLotsForBuyer(ServerLotDTO[] allLots, ServerLotDTO[] buyerLots)
         {
             throw new NotImplementedException();
         }

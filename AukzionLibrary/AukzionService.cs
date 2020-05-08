@@ -27,6 +27,7 @@ namespace AukzionLibrary
 
         private void AddForViewProduct()
         {
+            //У полі продукт потрібно додади поле BuyerName
             var allLot = (from obj in MyAuction.Product
                           select obj).ToList();
             foreach (var item in allLot)
@@ -37,7 +38,7 @@ namespace AukzionLibrary
                     Id = item.Id,
                     Photo = item.Photo,
                     Price = (int)item.StartPrice,
-                    BuyerName = "Yo"
+                    BuyerName = "None"
                 });
             }
         }
@@ -73,7 +74,7 @@ namespace AukzionLibrary
                     Name = name,
                     Cash = money
                 });
-                MyAuction.SaveChanges();
+       //         MyAuction.SaveChanges();
                 connect = true;
             }
 
@@ -86,6 +87,7 @@ namespace AukzionLibrary
             var buyer = MyAuction.Buyer.FirstOrDefault(x => x.Name == name);
             if (buyer != null)
             {
+                MyAuction.Buyer.Remove(buyer);
                 MyAuction.SaveChanges();
             }
             var buyerServer = ServerBuyers.FirstOrDefault(b => b.Name == name);
@@ -106,10 +108,10 @@ namespace AukzionLibrary
                 {
                     if (auctionLot[i].BuyerName != nameOfBuyer)
                     {
-                        if (auctionLot[i].BuyerName != "Yo")
+                        if (auctionLot[i].BuyerName != "None")
                         {
 
-                            ServerBuyers.FirstOrDefault(x => x.Name == auctionLot[i].BuyerName).Money += auctionLot[i].Price;
+                            ServerBuyers.FirstOrDefault(x => x.Name == auctionLot[i].BuyerName).Money +=(int) auctionLot[i].Price;
                             ServerBuyers.FirstOrDefault(x => x.Name == auctionLot[i].BuyerName).BuyerSelectedLots.Remove(auctionLot[i]);
                         }
                         ServerBuyers.FirstOrDefault(x => x.Name == nameOfBuyer).Money -= bet;
@@ -130,7 +132,14 @@ namespace AukzionLibrary
         }
         public void Sold(int productId, int buyerId) //це треба дописати
         {
-            throw new NotImplementedException();
+
+
+
+            //foreach (ServerBuyerDTO item in ServerBuyers)
+            //{
+            //    item.operationContextCallBack.GetCallbackChannel<IAuctionCallBack>().UpdateLotsForBuyer(auctionLot, item.BuyerSelectedLots);
+            //}
+
         }
 
         public ObservableCollection<ServerLotDTO> GetAllProduct()

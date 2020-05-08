@@ -65,6 +65,7 @@
     <Compile Include="StartWindow.xaml.cs">
       <DependentUpon>StartWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TimerClass\TimeClass.cs" />
     <Compile Include="ViewModel\AuctionViewModel.cs" />
     <Resource Include="ImagesForProject\AuctionImage.jpg" />
     <Resource Include="ImagesForProject\buyer.png" />
@@ -151,7 +152,9 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="ImagesForProject\CreateButton1.jpg" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="ImagesForProject\seller.png" />
   </ItemGroup>
