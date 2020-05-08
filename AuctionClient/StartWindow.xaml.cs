@@ -27,11 +27,18 @@ namespace AuctionClient
 
         private void Enter_BtnClick(object sender, RoutedEventArgs e)
         {
-            int buyerCash = Int32.Parse(tbBuyerCash.Text);
-            MainWindow window = new MainWindow(tbBuyerName.Text, buyerCash);
-            window.Owner = this; //головне вікно - це.
-            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            window.Show();
+            try
+            {
+                int buyerCash = Int32.Parse(tbBuyerCash.Text);
+                MainWindow window = new MainWindow(tbBuyerName.Text, buyerCash);
+                window.Owner = this; //головне вікно - це.
+                window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                window.Show();
+            }
+            catch(InvalidOperationException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btnForSeller_Click(object sender, RoutedEventArgs e)

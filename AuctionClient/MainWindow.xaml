@@ -44,10 +44,9 @@
             <Setter Property="Padding" Value="10"></Setter>
             <Setter Property="MaxWidth" Value="400"></Setter>
         </Style>
-        <Style TargetType="ListBox">
-            <Setter Property="MinHeight" Value="75"/>
-            <Setter Property="DisplayMemberPath" Value="Name"></Setter>
-        </Style>
+        <!--<Style TargetType="ListBoxItem">
+            <Setter Property="MinHeight" Value="175"/>
+        </Style>-->
 
     </Window.Resources>
     <Grid DataContext="{StaticResource AucVM}">
@@ -58,47 +57,69 @@
         <Grid.Background>
             <ImageBrush ImageSource="ImagesForProject/AuctionImage.jpg" Stretch="Fill"></ImageBrush>
         </Grid.Background>
-        <ListBox  x:Name="lstAuction"  ItemsSource="{Binding Path=MyLot}"
+        <ListBox  x:Name="lstAuction" DataContext="{StaticResource AucVM}" 
+                  SelectedItem="{Binding Path=SelectedLot}"
                   Style="{StaticResource lstAuction}"
-                  Opacity="0.95">
+                  Opacity="0.95"
+                  >
+            <!--<ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="Background" Value="AliceBlue"></Setter>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Background" Value="Red"></Setter>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>-->
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Border 
+                                    
                         BorderBrush="Black"
                          BorderThickness="3"
             CornerRadius="10 10 10 10">
-                    <Grid MinWidth="300" MaxWidth="350" HorizontalAlignment="Center">
+                        <Grid 
+                        MinWidth="300" MaxWidth="400" HorizontalAlignment="Center">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="0.5*"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="1">
-                        <StackPanel  Orientation="Horizontal">
-                        
-                        <Label Style="{StaticResource lbName}" Content="{Binding Path=Name, IsAsync=True, Mode=TwoWay}"></Label>
+                                <StackPanel  Orientation="Horizontal">
+
+                                    <Label Style="{StaticResource lbName}" Content="{Binding Path=Name, IsAsync=True, Mode=TwoWay}"></Label>
                                     <TextBlock HorizontalAlignment="Right">Timer:</TextBlock>
-                                    <TextBlock DataContext="{StaticResource AucVM}" Text="{Binding Path=MyTime}"></TextBlock>
-                        </StackPanel>
-                        <StackPanel  Orientation="Horizontal">
-                            <TextBlock>BuyerName:</TextBlock>
-                            
-                            <TextBlock Style="{StaticResource tbList}" Foreground="DarkSlateBlue"
+                                    <TextBlock  Text="{Binding Path=MyTimeClass.MyTime}"></TextBlock>
+                                </StackPanel>
+                                <StackPanel  Orientation="Horizontal">
+                                    <TextBlock>BuyerName:</TextBlock>
+
+                                    <TextBlock Style="{StaticResource tbList}" Foreground="DarkSlateBlue"
                                        Text="{Binding Path=BuyerName, IsAsync=True, Mode=TwoWay}"></TextBlock>
-                            
-                        </StackPanel>
-                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" >
-                            <TextBlock Foreground="Black">SellPrice:</TextBlock>
-                            <TextBlock Style="{StaticResource tbList}" Text="{Binding Path=Price, IsAsync=True, Mode=TwoWay,StringFormat={}{0} $}"></TextBlock>
-                        </StackPanel>
+
+                                </StackPanel>
+                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" >
+                                    <TextBlock Foreground="Black">SellPrice:</TextBlock>
+                                    <TextBlock Style="{StaticResource tbList}" Text="{Binding Path=Price, IsAsync=True, Mode=TwoWay,StringFormat={}{0} $}"></TextBlock>
+                                </StackPanel>
                             </StackPanel>
                             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                            <Image Source="{Binding Path=Photo, IsAsync=True, Mode=TwoWay}" MaxHeight="100"></Image>
-                        </StackPanel>
+                                <Image Source="{Binding Path=Photo, IsAsync=True, Mode=TwoWay}" MaxHeight="100"></Image>
+                            </StackPanel>
                             <StackPanel>
                                 <TextBlock FontSize="25">Time per coll:</TextBlock>
                             </StackPanel>
-                    </Grid>
+                        </Grid>
                     </Border>
+
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
@@ -107,8 +128,8 @@
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <Label Style="{StaticResource lbBuyerName}"
                         Content="{Binding Path=BuyerName}"></Label>
-                </StackPanel>
-                
+            </StackPanel>
+
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <TextBlock>UserCash:</TextBlock>
                 <TextBlock Style="{StaticResource tbList}"         
@@ -124,7 +145,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <StackPanel>
-            <TextBlock HorizontalAlignment="Center"
+                    <TextBlock HorizontalAlignment="Center"
                        FontSize="17"
                        FontStyle="Italic"
                        Margin="2">User selected lots</TextBlock>
@@ -141,12 +162,12 @@
                             DataContext="{Binding ElementName=lstBuyerLots,Path=SelectedItem}"
                             >
                     <StackPanel Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource tbLotInfo}">ProductName:</TextBlock>
+                        <TextBlock Style="{StaticResource tbLotInfo}">ProductName:</TextBlock>
                         <TextBlock Text="{Binding Path=Name}" Style="{StaticResource tbLotInfo}"></TextBlock>
                     </StackPanel>
                     <StackPanel>
-                    <TextBlock Style="{StaticResource tbLotInfo}">ProductSetPrice:</TextBlock>
-                    <TextBlock Text="{Binding Path=Price,StringFormat={}{0} $}" Style="{StaticResource tbLotInfo}"></TextBlock>
+                        <TextBlock Style="{StaticResource tbLotInfo}">ProductSetPrice:</TextBlock>
+                        <TextBlock Text="{Binding Path=Price,StringFormat={}{0} $}" Style="{StaticResource tbLotInfo}"></TextBlock>
                     </StackPanel>
                     <Image MaxHeight="75" Source="{Binding Path=Photo}"></Image>
                 </StackPanel>
@@ -155,23 +176,24 @@
                 BorderBrush="Black"
                          BorderThickness="3"
  >
-            <StackPanel Margin="7" Orientation="Horizontal">
+                <StackPanel Margin="7" Orientation="Horizontal">
 
-            <Button Margin="10" BorderThickness="2" Padding="11" Background="GreenYellow"
+                    <Button Margin="10" BorderThickness="2" Padding="11" Background="GreenYellow"
                 Click="MakeBet_BtnClick" Height="50">MakeBet</Button>
 
                     <StackPanel>
-                <Slider Margin="7" 
+                        <Slider Margin="7" 
                     x:Name="sliderBet" Width="250" HorizontalAlignment="Right" Height="30" Maximum="{Binding Path=BuyerCash}"
                         IsSnapToTickEnabled="True" TickFrequency="500" TickPlacement="Both"></Slider>
-                <TextBlock>Bet:</TextBlock>
-                <TextBox x:Name="tbBet" 
+                        <TextBlock>Bet:</TextBlock>
+                        <TextBox x:Name="tbBet" 
                          MinWidth="20"
                          Text="{Binding ElementName=sliderBet,Path=Value,Mode=TwoWay}"></TextBox>
                     </StackPanel>
                 </StackPanel>
-                
+
             </Border>
+            <Button Click="Button_Click">ClickME</Button>
         </StackPanel>
     </Grid>
 </Window>

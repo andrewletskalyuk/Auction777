@@ -25,7 +25,6 @@ namespace AukzionLibrary.DTOClasses
         }
 
         private decimal _price;
-
         public decimal Price
         {
             get { return _price; }
