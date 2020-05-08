@@ -1,3 +1,4 @@
+using AuctionClient.LotModel;
 using AuctionClient.ServiceReference1;
 using AuctionClient.ViewModel;
 using Microsoft.Win32;
@@ -28,7 +29,7 @@ namespace AuctionClient
             InitializeComponent();
             sellerName = "NoName";
             sellerCash = 0;
-            this.DataContext = viewmodel; 
+         //   this.DataContext = viewmodel; 
             lbLots.ItemsSource = viewmodel.MyLot; //це треба буде переробити
         }
 
@@ -43,7 +44,7 @@ namespace AuctionClient
             this.sellerName = sellerName;
             this.sellerCash = sellerCash;
             viewmodel = new AuctionViewModel();
-            this.DataContext = viewmodel;
+          //  this.DataContext = viewmodel;
             ConnectionForSeller();
         }
         /// <summary>
@@ -55,13 +56,21 @@ namespace AuctionClient
             var serverLotDTOs = seller.GetAllProduct();
             sellerWindowTitle.Title = sellerName;
             //Створює усі колекції масивами
-            foreach (ServerLotDTO lotDTO in serverLotDTOs)
+            foreach (ServerLotDTO item in serverLotDTOs)
             {
-                viewmodel.MyLot.Add(lotDTO);
+                viewmodel.ClientLots.Add(new ClientLot()
+                {
+                    iD = item.Id,
+                    BuyerName = "None",
+                    Price = item.Price,
+                    Name = item.Name,
+                    Info = "Non info",
+                    Photo = item.Photo
+                });
             }
-            this.DataContext = viewmodel;
+        //    this.DataContext = viewmodel;
             //lbLots = new ListBox();
-            lbLots.ItemsSource = viewmodel.MyLot;
+            lbLots.ItemsSource = viewmodel.ClientLots;
         }
 
         private void btnChooseThPhoto_Click(object sender, RoutedEventArgs e)
@@ -94,7 +103,19 @@ namespace AuctionClient
             if (IsCorrectDataNewProduct(tbNameProduct.Text, tbNameProductStartPrice.Text, imageForLot.Source))
             {
                 var tempPriceLot = Int32.Parse(tbNameProductStartPrice.Text);
-                ServerLotDTO serverLotDTO = new ServerLotDTO()
+                //ServerLotDTO serverLotDTO = new ServerLotDTO()
+                //{
+                //    Name = tbNameProduct.Text,
+                //    BuyerName = "Just added product",
+                //    Price = tempPriceLot,
+                //    SoldPrice = tempPriceLot,
+                //    Photo = imageForLot.Source.ToString()
+                //};
+                //await seller.AddProductToDBSellerAsync(serverLotDTO.Name, serverLotDTO.Price, serverLotDTO.Photo);
+                //viewmodel.MyLot.Add(serverLotDTO);
+                // lbLots.ItemsSource = viewmodel.MyLot;
+
+                ClientLot sellerLot = new ClientLot()              
                 {
                     Name = tbNameProduct.Text,
                     BuyerName = "Just added product",
@@ -102,9 +123,10 @@ namespace AuctionClient
                     SoldPrice = tempPriceLot,
                     Photo = imageForLot.Source.ToString()
                 };
-                await seller.AddProductToDBSellerAsync(serverLotDTO.Name, serverLotDTO.Price, serverLotDTO.Photo);
-                viewmodel.MyLot.Add(serverLotDTO);
-                lbLots.ItemsSource = viewmodel.MyLot;
+                await seller.AddProductToDBSellerAsync(sellerLot.Name, sellerLot.Price, sellerLot.Photo);
+
+                viewmodel.ClientLots.Add(sellerLot);
+
             }
             else
             {

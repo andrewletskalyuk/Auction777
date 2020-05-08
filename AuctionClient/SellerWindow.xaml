@@ -4,10 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AuctionClient"
+         xmlns:b="clr-namespace:AuctionClient.ViewModel"
         mc:Ignorable="d"
         Title="SellerWindow" Height="450" Width="800"
         x:Name="sellerWindowTitle">
     <Window.Resources>
+        <b:AuctionViewModel x:Key="AucVM"></b:AuctionViewModel>
         <Style x:Key="textBlockStyle">
             <Setter Property="Control.FontStyle" Value="Italic"/>
             <Setter Property="Control.FontSize" Value="14"/>
@@ -81,7 +83,7 @@
             Grid.Row="1" Grid.Column="1"
             CanContentScroll="True" Margin="0,2,0,1">
             <Grid Background="Blue">
-                <ListBox x:Name="lbLots" ItemsSource="{Binding}">
+                <ListBox x:Name="lbLots" DataContext="{StaticResource AucVM}" ItemsSource="{Binding}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>

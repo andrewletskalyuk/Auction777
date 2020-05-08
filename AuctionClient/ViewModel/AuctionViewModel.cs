@@ -1,4 +1,5 @@
-﻿using AuctionClient.ServiceReference1;
+﻿using AuctionClient.LotModel;
+using AuctionClient.ServiceReference1;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -72,9 +73,16 @@ namespace AuctionClient.ViewModel
 			set { _myLot = value; }
 		}
 
+		private ObservableCollection<ClientLot> _clientLots;
+		public ObservableCollection<ClientLot> ClientLots
+		{
+			get { return _clientLots; }
+			set { _clientLots = value; }
+		}
 		public AuctionViewModel()
 		{
 			MyLot = new ObservableCollection<ServerLotDTO>();
+			ClientLots = new ObservableCollection<ClientLot>();
 		}
 		public void PropertyChanger(string propertyName)
 		{

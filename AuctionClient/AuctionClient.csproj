@@ -58,6 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\ClientLot.cs" />
     <Compile Include="SellerWindow.xaml.cs">
       <DependentUpon>SellerWindow.xaml</DependentUpon>
     </Compile>
@@ -150,9 +151,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ClassHelper\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="ImagesForProject\seller.png" />
   </ItemGroup>

@@ -45,9 +45,7 @@ namespace AukzionLibrary
         //метод буде bool для того щоб в Покупця викликати методи Connect i Disconnect 
         public bool ConnectionForBuyer(string name, int money)
         {
-            bool connect = false;
-
-
+            bool connect = true;
 
             var user = MyAuction.Buyer.FirstOrDefault(n => n.Name == name);
             ServerBuyers.Add(new ServerBuyerDTO()
@@ -60,13 +58,13 @@ namespace AukzionLibrary
             //Перевіряти на однакові імена
             if (user != null)
             {
-                foreach (Buyer item in MyAuction.Buyer)
+                foreach (ServerBuyerDTO item2 in ServerBuyers)
                 {
-                    if (item.Name == name)
-                    {
-                        connect = true;
-                    }
+                    if (user.Name == item2.Name)
+                        connect = false;
+
                 }
+
             }
             else
             {
@@ -98,29 +96,8 @@ namespace AukzionLibrary
         //зробимо ставку - це для Покупця
         public void MakeBet(string nameOfBuyer, int productId, int bet)
         {
-
-            //var user = MyAuction.Buyer.FirstOrDefault(x => x.Name == nameOfBuyer);
-            //var product = MyAuction.Product.FirstOrDefault(y => y.Id == productId);
-
             var user = ServerBuyers.FirstOrDefault(x => x.Name == nameOfBuyer);
             var product = auctionLot.FirstOrDefault(y => y.Id == productId);
-
-            if (user.Money > bet)
-            {
-                // user.Money -= bet;
-                if (product.Price < bet)
-                {
-                    //    product.SellPrice = bet;
-                }
-                else
-                {
-                    throw new InvalidOperationException("Small Price");
-                }
-            }
-            else
-            {
-                throw new InvalidOperationException("No Chash");
-            }
 
             //Придумати щось по типу откату ставки
             for (int i = 0; i < auctionLot.Count; i++)
@@ -177,11 +154,12 @@ namespace AukzionLibrary
         public async void AddProductToDBSeller(string name, decimal startPrice, string pathToPhoto)
         {
             var checkOutProduct = MyAuction.Product.FirstOrDefault(
-                                                        x => x.Name == name && 
+                                                        x => x.Name == name &&
                                                         x.Photo == pathToPhoto);
             if (checkOutProduct is null)
             {
-                ServerLotDTO serverLotDTO = new ServerLotDTO() { 
+                ServerLotDTO serverLotDTO = new ServerLotDTO()
+                {
                     Name = name,
                     Price = startPrice,
                     Photo = pathToPhoto,

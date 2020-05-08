@@ -58,7 +58,7 @@
         <Grid.Background>
             <ImageBrush ImageSource="ImagesForProject/AuctionImage.jpg" Stretch="Fill"></ImageBrush>
         </Grid.Background>
-        <ListBox  x:Name="lstAuction"  ItemsSource="{Binding Path=MyLot}"
+        <ListBox  x:Name="lstAuction"  ItemsSource="{Binding}"
                   Style="{StaticResource lstAuction}"
                   Opacity="0.95">
             <ListBox.ItemTemplate>
